@@ -1,0 +1,52 @@
+[
+  {
+    "invoiceId": "1",
+    "state": "0",
+    "userId": "3",
+    "invoiceDate": "1/1/2017",
+    "vendorId": "VENDOR1",
+    "amount": "10"
+  },{
+    "invoiceId": "2",
+    "state": "0",
+    "userId": "3",
+    "invoiceDate": "1/2/2017",
+    "vendorId": "VENDOR2",
+    "amount": "10.01"
+  },{
+    "invoiceId": "3",
+    "state": "1",
+    "userId": "3",
+    "invoiceDate": "1/3/2017",
+    "vendorId": "VENDOR1",
+    "amount": "19.95"
+  },{
+    "invoiceId": "4",
+    "state": "0",
+    "userId": "3",
+    "invoiceDate": "2/1/2017",
+    "vendorId": "VENDOR2",
+    "amount": "9.99"
+  },{
+    "invoiceId": "5",
+    "state": "1",
+    "userId": "4",
+    "invoiceDate": "1/1/2017",
+    "vendorId": "VENDOR1",
+    "amount": "200"
+  },{
+    "invoiceId": "6",
+    "state": "1",
+    "userId": "3",
+    "invoiceDate": "1/3/2017",
+    "vendorId": "VENDOR2",
+    "amount": "304.56"
+  },{
+    "invoiceId": "7",
+    "state": "2",
+    "userId": "3",
+    "invoiceDate": "2/2/2017",
+    "vendorId": "VENDOR1",
+    "amount": "5000.02"
+  }
+]
