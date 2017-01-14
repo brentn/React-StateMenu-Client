@@ -24,6 +24,7 @@ function selectItem(id) {
   // let item = $(evt.target).closest('.menu-item');
   $('.menu .menu-item.selected').removeClass('selected');
   // $(item).addClass('selected');
+  console.log('selecting ',id)
 }
 function itemsFromInvoices(invoices) {
   let items =  [];
