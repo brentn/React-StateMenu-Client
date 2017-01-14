@@ -2,7 +2,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 function openFirstTab(menuData) {
-  if (menuData.length > 0) {
+  if (menuData && menuData.length > 0) {
     menuData[0] = React.cloneElement(menuData[0], {selected:true});
   }
   return menuData;

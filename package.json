@@ -5,8 +5,12 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-immutable": "^1.6.0",
+    "enzyme": "^2.7.0",
     "mocha": "^3.2.0",
-    "react-scripts": "0.8.4"
+    "react-addons-test-utils": "^15.4.2",
+    "react-scripts": "0.8.4",
+    "sinon": "^1.17.7",
+    "sinon-spy-react": "^2.0.1"
   },
   "dependencies": {
     "immutable": "^3.8.1",
