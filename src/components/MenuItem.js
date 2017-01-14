@@ -4,16 +4,16 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 export default React.createClass({
   mixins: [PureRenderMixin],
   selectItem: function() {
-    this.props.selectItem(this.props.id);
+    this.props.item.selectItem(this.props.item.id);
   },
   render: function() {
-    return <table className={"menu-item" + (this.props.selected?" selected":"")} title={this.props.tooltip} onClick={this.selectItem}>
+    return <table className={"menu-item"} title={this.props.item.tooltip} onClick={this.selectItem}>
       <tbody>
         <tr>
-          <td><img className="image" src={this.props.imageUrl} role='presentation' /></td>
+          <td><img className="image" src={this.props.item.imageUrl} role='presentation' /></td>
           <td className='details'>
-            <span className='title'>{this.props.title}</span><br/>
-            <span className='subtitle'>{this.props.subtitle}</span>
+            <span className='title'>{this.props.item.title}</span><br/>
+            <span className='subtitle'>{this.props.item.subtitle}</span>
           </td>
         </tr>
       </tbody>

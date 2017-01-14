@@ -2,8 +2,9 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import InvoiceMenuAdapter from './InvoiceMenuAdapter';
 import Menu from './Menu';
+import MenuTab from './MenuTab';
 
-var state = {
+var data = {
   userId:1,
   isFinance:true,
   accounts:['110100', '110140'],
@@ -16,11 +17,25 @@ var state = {
     {id:4, status:1, userId:1, apprUserId:2, vendorId:'GRATOY', grossAmount:84.23, costCenter:'110100'}
   ]
 };
-let menuAdapter = new InvoiceMenuAdapter(state);
+
+let menuAdapter = new InvoiceMenuAdapter(data);
+function buildMenu() {
+  let menuData = [];
+  menuAdapter.tabNames().forEach((tab) => {
+    menuData.push(<MenuTab key={tab} title={tab} sections={menuAdapter.getSectionsForTab(tab)} />);
+  });
+  return menuData;
+}
 
 export default React.createClass({
   mixins: [PureRenderMixin],
+  getInitialState: function() {
+    return {
+      selectedItem:null,
+      items:[]
+    }
+  },
   render: function() {
-    return <Menu adapter={menuAdapter}/>
+    return <Menu menuData={buildMenu()}/>
   }
 });

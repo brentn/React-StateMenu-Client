@@ -31,21 +31,21 @@ body {
   -webkit-box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.4);
 }
-.menu>.menu-tab>.title.selected~.menu-section {
+.menu>.menu-tab>.title.selected~.menu-sections {
   box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.4);
   height: 400px;
   padding: 10px;
   opacity:1;
   overflow-y:auto
 }
-.menu>.menu-tab>.title:not(.selected)~.menu-section {
+.menu>.menu-tab>.title:not(.selected)~.menu-sections {
   height: 0;
   opacity:0;
   padding: 0 0 0 10px  ;
   overflow:hidden;
 }
 
-.menu>.menu-tab>.menu-section {
+.menu>.menu-tab>.menu-sections {
   -moz-transition: height .3s, opacity .3s;
   -ms-transition: height .3s, opacity .3s;
   -o-transition: height .3s, opacity .3s;

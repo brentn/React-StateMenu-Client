@@ -21,12 +21,11 @@ function getTooltip(invoice) {
   return "AP #" + ('00000' + invoice.id).slice(-4);
 }
 function selectItem(id) {
-  this.selectedId = id;
   // let item = $(evt.target).closest('.menu-item');
   $('.menu .menu-item.selected').removeClass('selected');
   // $(item).addClass('selected');
 }
-function itemsFromInvoices(invoices, selectedId) {
+function itemsFromInvoices(invoices) {
   let items =  [];
   invoices.forEach(invoice => {
     items.push({
@@ -36,7 +35,6 @@ function itemsFromInvoices(invoices, selectedId) {
       subtitle: getMenuSubtitle(invoice),
       tooltip: getTooltip(invoice),
       total: invoice.grossAmount,
-      selected: (invoice.id === selectedId),
       selectItem: selectItem
     });
   });
@@ -104,15 +102,14 @@ function buildAccountTree(title, invoices) {
 }
 
 export default class InvoiceMenuAdapter {
-  constructor(state) {
-    this.userId = state.userId;
-    this.isFinance = state.isFinance;
-    this.accounts = state.accounts;
-    this.invoices = state.invoices.sort(byInvoiceDate);
+  constructor(data) {
+    this.userId = data.userId;
+    this.isFinance = data.isFinance;
+    this.accounts = data.accounts;
+    this.invoices = data.invoices.sort(byInvoiceDate);
     this.myInvoices = this.invoices.filter(invoice => {
       return invoice.userId === this.userId;
     });
-    this.selectedId = (state.selectedId?state.selectedId:null);
   }
   tabNames() {
     return ["Draft", "Submitted", "Approved", "Paying", "Paid", "Deleted"];
@@ -144,12 +141,12 @@ export default class InvoiceMenuAdapter {
         return invoice.apprUserId === this.userId;
       });
       if (approvableInvoices.length > 0) {
-        sections.push({title: "Awaiting My Approval", items: itemsFromInvoices(approvableInvoices, this.selectedId)});
+        sections.push({title: "Awaiting My Approval", items: itemsFromInvoices(approvableInvoices)});
         myTitle = MY_TITLE;
       }
     }
     let myInvoices = tabInvoices(tabName, this.myInvoices);
-    sections.push({title: myTitle, items: itemsFromInvoices(myInvoices, this.selectedId)});
+    sections.push({title: myTitle, items: itemsFromInvoices(myInvoices)});
     return sections;
   }
 }
