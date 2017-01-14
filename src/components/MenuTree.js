@@ -15,18 +15,15 @@ export default React.createClass({
     }
   },
   render: function() {
-    var menuItems = [];
-    this.props.items.forEach(item => {
-      if (item.items) {
-        menuItems.push(<li key={item.title}><MenuTree title={item.title} items={item.items}/></li>);
-      } else {
-        menuItems.push(<li key={item.id}><MenuItemCompact item={item} /></li>);
-      }
-    });
     return <div className="menu-tree" >
       <div className="title" onClick={this.toggle}>{this.props.title}</div>
       <ul>
-        {menuItems}
+        {this.props.items.map(item =>
+          (item.items?
+            <li key={item.title}><MenuTree title={item.title} items={item.items}/></li>:
+            <li key={item.id}><MenuItemCompact item={item} /></li>
+          )
+        )}
       </ul>
     </div>;
   }

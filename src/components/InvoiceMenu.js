@@ -19,13 +19,6 @@ var data = {
 };
 
 let menuAdapter = new InvoiceMenuAdapter(data);
-function buildMenu() {
-  let menuData = [];
-  menuAdapter.tabNames().forEach((tab) => {
-    menuData.push(<MenuTab key={tab} title={tab} sections={menuAdapter.getSectionsForTab(tab)} />);
-  });
-  return menuData;
-}
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -36,6 +29,8 @@ export default React.createClass({
     }
   },
   render: function() {
-    return <Menu menuData={buildMenu()}/>
+    return <Menu menuData={menuAdapter.tabNames().map(tab =>
+      <MenuTab key={tab} title={tab} sections={menuAdapter.getSectionsForTab(tab)} />
+    )}/>
   }
 });

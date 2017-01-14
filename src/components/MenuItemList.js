@@ -5,13 +5,11 @@ import MenuItem from './MenuItem';
 export default React.createClass({
   mixins: [PureRenderMixin],
   render: function() {
-    var listItems = [];
-    this.props.items.forEach(item => {
-      listItems.push(<li key={item.id}><MenuItem item={item} /></li>);
-    });
     return <ul className="menu-item-list" >
       {(this.props.title?<span className='title'>{this.props.title}</span>:"")}
-      {listItems}
+      {this.props.items.map(item =>
+          <li key={item.id}><MenuItem item={item} /></li>
+      )}
     </ul>;
   }
 });
