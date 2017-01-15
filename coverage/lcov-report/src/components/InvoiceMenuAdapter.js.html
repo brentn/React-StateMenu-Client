@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/InvoiceMenuAdapter.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> InvoiceMenuAdapter.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/85</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/84</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from '../../lib/jquery-3.1.0.m<span class="cstat-no" title="statement not covered" >in';<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+&nbsp;
+function <span class="fstat-no" title="function not covered" >byInvoiceDate(</span>a, b) {
+<span class="cstat-no" title="statement not covered" >  return a.invoiceDate &lt; b.invoiceDate;</span>
+}
+function <span class="fstat-no" title="function not covered" >getShortTitle(</span>invoice) {
+  let id = <span class="cstat-no" title="statement not covered" >'#' + ('0000' + invoice.id).slice(-5);</span>
+  let vendorId = <span class="cstat-no" title="statement not covered" >invoice.vendorId?invoice.vendorId:'no vendor';</span>
+<span class="cstat-no" title="statement not covered" >  return id + ' : ' + vendorId + ' $' + invoice.grossAmount.toFixed(2);</span>
+}
+function <span class="fstat-no" title="function not covered" >getMenuTitle(</span>invoice) {
+<span class="cstat-no" title="statement not covered" >  return (invoice.vendorId || 'NO VENDOR')</span>;
+}
+function <span class="fstat-no" title="function not covered" >getMenuSubtitle(</span>invoice) {
+<span class="cstat-no" title="statement not covered" >  return invoice.grossAmount.toFixed(2);</span>
+}
+function <span class="fstat-no" title="function not covered" >getImageUrl(</span>userId) {
+<span class="cstat-no" title="statement not covered" >  return 'https://staff.powertochange.org/custom-pages/webService.php?type=staff_photo&amp;api_token=V7qVU7n59743KNVgPdDMr3T8&amp;staff_username=brentn';</span>
+}
+function <span class="fstat-no" title="function not covered" >getTooltip(</span>invoice) {
+<span class="cstat-no" title="statement not covered" >  return "AP #" + ('00000' + invoice.id).slice(-4);</span>
+}
+function <span class="fstat-no" title="function not covered" >selectItem(</span>id) {
+  // let item = $(evt.target).closest('.menu-item');
+  $('.menu .menu-item.selected').removeClass('selected');
+  // $(item).addClass('selected');
+<span class="cstat-no" title="statement not covered" >  console.log('selecting ',id)</span>
+}
+function <span class="fstat-no" title="function not covered" >itemsFromInvoices(</span>invoices) {
+  let items = <span class="cstat-no" title="statement not covered" > []</span>;
+<span class="cstat-no" title="statement not covered" >  invoices.forEach(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    items.push({</span>
+      id: invoice.id,
+      imageUrl: getImageUrl(invoice.userId),
+      title: getMenuTitle(invoice),
+      subtitle: getMenuSubtitle(invoice),
+      tooltip: getTooltip(invoice),
+      total: invoice.grossAmount,
+      selectItem: selectItem
+    });
+  });
+<span class="cstat-no" title="statement not covered" >  return items;</span>
+}
+function <span class="fstat-no" title="function not covered" >tabStatusList(</span>tabName) {
+<span class="cstat-no" title="statement not covered" >  switch (tabName) {</span>
+    case "Draft":<span class="cstat-no" title="statement not covered" > return [0];</span>
+    case "Submitted":<span class="cstat-no" title="statement not covered" > return [1,2,3];</span>
+    case "Approved":<span class="cstat-no" title="statement not covered" > return [4,10,20];</span>
+    case "Paying":<span class="cstat-no" title="statement not covered" > return [5];</span>
+    case "Paid":<span class="cstat-no" title="statement not covered" > return [8];</span>
+    case "Deleted":<span class="cstat-no" title="statement not covered" > return [6];</span>
+    default:<span class="cstat-no" title="statement not covered" > return [];</span>
+  }
+}
+function <span class="fstat-no" title="function not covered" >tabInvoices(</span>tabName, invoices) {
+  let validStatusList = <span class="cstat-no" title="statement not covered" >tabStatusList(tabName);</span>
+<span class="cstat-no" title="statement not covered" >  return invoices.filter(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return validStatusList.includes(invoice.status);</span>
+  });
+}
+function <span class="fstat-no" title="function not covered" >showAllItems(</span>isFinance, tabName) {
+  let validTabs = <span class="cstat-no" title="statement not covered" >["Submitted", "Approved", "Paying", "Paid"];</span>
+<span class="cstat-no" title="statement not covered" >  return (isFinance &amp;&amp; validTabs.includes(tabName))</span>;
+}
+function <span class="fstat-no" title="function not covered" >showAccountsTree(</span>accounts, tabName) {
+  let validTabs = <span class="cstat-no" title="statement not covered" >["Submitted", "Approved", "Paying", "Paid"];</span>
+<span class="cstat-no" title="statement not covered" >  return (accounts &amp;&amp; accounts.length&gt;0 &amp;&amp; validTabs.includes(tabName));</span>
+}
+function <span class="fstat-no" title="function not covered" >getNode(</span>title, tree) {
+  let nodes = <span class="cstat-no" title="statement not covered" >tree.items.filter(<span class="fstat-no" title="function not covered" >it</span>em =&gt; item.title === title);</span>
+<span class="cstat-no" title="statement not covered" >  if (nodes.length) {</span>
+<span class="cstat-no" title="statement not covered" >    return nodes[0];</span>
+  } else {
+    let newNode = <span class="cstat-no" title="statement not covered" >{title: title, items: []};</span>
+<span class="cstat-no" title="statement not covered" >    tree.items.push(newNode);</span>
+<span class="cstat-no" title="statement not covered" >    return newNode;</span>
+  }
+}
+function <span class="fstat-no" title="function not covered" >buildVendorTree(</span>title, invoices) {
+  let tree = <span class="cstat-no" title="statement not covered" >{title: title, items: []};</span>
+<span class="cstat-no" title="statement not covered" >  invoices.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return a.vendorId &gt; b.vendorId;</span>
+  }).forEach(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {
+    let vendor = <span class="cstat-no" title="statement not covered" >invoice.vendorId?invoice.vendorId:'NO VENDOR';</span>
+    let letter = <span class="cstat-no" title="statement not covered" >invoice.vendorId?vendor.substring(0,1):'?';</span>
+    let letterNode = <span class="cstat-no" title="statement not covered" >getNode(letter, tree);</span>
+    let vendorNode = <span class="cstat-no" title="statement not covered" >getNode(vendor, letterNode);</span>
+    let itemNode = <span class="cstat-no" title="statement not covered" >{id:invoice.id, title: getShortTitle(invoice), selectItem: selectItem};</span>
+<span class="cstat-no" title="statement not covered" >    vendorNode.items.push(itemNode);</span>
+  });
+<span class="cstat-no" title="statement not covered" >  return tree</span>
+}
+function <span class="fstat-no" title="function not covered" >buildAccountTree(</span>title, invoices) {
+  let tree = <span class="cstat-no" title="statement not covered" >{title: title, items:[]};</span>
+<span class="cstat-no" title="statement not covered" >  invoices.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return a.costCenter &gt; b.costCenter;</span>
+  }).forEach(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {
+    let accountNode = <span class="cstat-no" title="statement not covered" >getNode(invoice.costCenter, tree);</span>
+    let itemNode = <span class="cstat-no" title="statement not covered" >{id:invoice.id, title: getShortTitle(invoice), selectItem: selectItem};</span>
+<span class="cstat-no" title="statement not covered" >    accountNode.items.push(itemNode);</span>
+  });
+<span class="cstat-no" title="statement not covered" >  return tree;</span>
+}
+&nbsp;
+export default class InvoiceMenuAdapter {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(data) {
+<span class="cstat-no" title="statement not covered" >    this.userId = data.userId;</span>
+<span class="cstat-no" title="statement not covered" >    this.isFinance = data.isFinance;</span>
+<span class="cstat-no" title="statement not covered" >    this.accounts = data.accounts;</span>
+<span class="cstat-no" title="statement not covered" >    this.invoices = data.invoices.sort(byInvoiceDate);</span>
+<span class="cstat-no" title="statement not covered" >    this.myInvoices = this.invoices.filter(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return invoice.userId === this.userId;</span>
+    });
+  }
+<span class="fstat-no" title="function not covered" >  ta</span>bNames() {
+<span class="cstat-no" title="statement not covered" >    return ["Draft", "Submitted", "Approved", "Paying", "Paid", "Deleted"];</span>
+  }
+<span class="fstat-no" title="function not covered" >  ge</span>tSectionsForTab(tabName) {
+    const MY_TITLE <span class="cstat-no" title="statement not covered" >= "My Items</span>";
+    let sections = <span class="cstat-no" title="statement not covered" >[];</span>
+    let myTitle = <span class="cstat-no" title="statement not covered" >'';</span>
+<span class="cstat-no" title="statement not covered" >    if (showAllItems(this.isFinance, tabName)) {</span>
+      let allInvoices = <span class="cstat-no" title="statement not covered" >tabInvoices(tabName, this.invoices);</span>
+<span class="cstat-no" title="statement not covered" >      if (allInvoices.length &gt; 0) {</span>
+        let allItems = <span class="cstat-no" title="statement not covered" >buildVendorTree("All Items", allInvoices);</span>
+<span class="cstat-no" title="statement not covered" >        sections.push(allItems);</span>
+<span class="cstat-no" title="statement not covered" >        myTitle = MY_TITLE;</span>
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    if (showAccountsTree(this.accounts, tabName)) {</span>
+      let accountInvoices = <span class="cstat-no" title="statement not covered" >tabInvoices(tabName, this.invoices).filter(<span class="fstat-no" title="function not covered" >in</span>voice =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return this.accounts.includes(invoice.costCenter);</span>
+      });
+<span class="cstat-no" title="statement not covered" >      if (accountInvoices.length&gt;0) {</span>
+        let accountItems = <span class="cstat-no" title="statement not covered" >buildAccountTree("My Accounts", accountInvoices);</span>
+<span class="cstat-no" title="statement not covered" >        sections.push(accountItems);</span>
+<span class="cstat-no" title="statement not covered" >        myTitle = MY_TITLE;</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    if (tabName === "Submitted") {</span>
+      let approvableInvoices = <span class="cstat-no" title="statement not covered" >tabInvoices("Submitted", this.invoices).filter(<span class="fstat-no" title="function not covered" >in</span>voice  =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return invoice.apprUserId === this.userId;</span>
+      });
+<span class="cstat-no" title="statement not covered" >      if (approvableInvoices.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        sections.push({title: "Awaiting My Approval", items: itemsFromInvoices(approvableInvoices)});</span>
+<span class="cstat-no" title="statement not covered" >        myTitle = MY_TITLE;</span>
+      }
+    }
+    let myInvoices = <span class="cstat-no" title="statement not covered" >tabInvoices(tabName, this.myInvoices);</span>
+<span class="cstat-no" title="statement not covered" >    sections.push({title: myTitle, items: itemsFromInvoices(myInvoices)});</span>
+<span class="cstat-no" title="statement not covered" >    return sections;</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jan 14 2017 13:05:43 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
