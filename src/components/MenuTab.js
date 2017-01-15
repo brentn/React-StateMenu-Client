@@ -5,6 +5,15 @@ import MenuTree from './MenuTree';
 import $ from '../../lib/jquery-3.1.0.min.js';
 
 export default React.createClass({
+  propTypes: {
+    title: React.PropTypes.string.isRequired,
+    sections: React.PropTypes.array.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      selected: false
+    };
+  }
   mixins: [PureRenderMixin],
   select: function(event) {
     $('.menu-tab>.title.selected').removeClass('selected');

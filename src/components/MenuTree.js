@@ -6,10 +6,14 @@ import $ from '../../lib/jquery-3.1.0.min.js';
 
 
 export default React.createClass({
+  propTypes: {
+    title: React.PropTypes.string.isRequired,
+    items: React.PropTypes.array.isRequired
+  },
   mixins: [PureRenderMixin],
   toggle: function(event) {
     if ($(event.target).hasClass('expanded')) {
-      $(event.target).removeClass('expanded')
+      $(event.target).removeClass('expanded');
     } else {
       $(event.target).addClass('expanded');
     }

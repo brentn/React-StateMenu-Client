@@ -24,7 +24,7 @@ function selectItem(id) {
   // let item = $(evt.target).closest('.menu-item');
   $('.menu .menu-item.selected').removeClass('selected');
   // $(item).addClass('selected');
-  console.log('selecting ',id)
+  console.log('selecting ',id);
 }
 function itemsFromInvoices(invoices) {
   let items =  [];
@@ -88,7 +88,7 @@ function buildVendorTree(title, invoices) {
     let itemNode = {id:invoice.id, title: getShortTitle(invoice), selectItem: selectItem};
     vendorNode.items.push(itemNode);
   });
-  return tree
+  return tree;
 }
 function buildAccountTree(title, invoices) {
   let tree = {title: title, items:[]};
@@ -126,7 +126,7 @@ export default class InvoiceMenuAdapter {
         sections.push(allItems);
         myTitle = MY_TITLE;
       }
-    };
+    }
     if (showAccountsTree(this.accounts, tabName)) {
       let accountInvoices = tabInvoices(tabName, this.invoices).filter(invoice => {
         return this.accounts.includes(invoice.costCenter);

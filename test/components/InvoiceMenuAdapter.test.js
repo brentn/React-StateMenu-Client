@@ -11,7 +11,9 @@ describe('Section', () => {
     });
   });
 
-  describe('tabFor()', () => {
-    it('returns 0 for state 0', () =>)
+  describe('getSectionsForTab()', () => {
+    xit('returns 0 for state 0', () => {
+      
+    });
   });
 });

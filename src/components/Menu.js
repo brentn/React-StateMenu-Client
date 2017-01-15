@@ -9,6 +9,9 @@ function openFirstTab(menuData) {
 }
 
 export default React.createClass({
+  propTypes: {
+    menuData: React.PropTypes.array.isRequired
+  }
   mixins: [PureRenderMixin],
   render: function() {
     return <div className="menu">
