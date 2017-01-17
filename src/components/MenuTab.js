@@ -16,7 +16,7 @@ export default React.createClass({
   },
   mixins: [PureRenderMixin],
   select: function(event) {
-    $('.menu-tab>.title.selected').removeClass('selected');
+    $('div.menu-tab>.title.selected').removeClass('selected');
     $(event.target).addClass('selected');
   },
   render: function() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow, mount } from 'enzyme';
+import { shallow, mount, render } from 'enzyme';
 
 import MenuTab from '../src/components/MenuTab';
 import MenuTree from '../src/components/MenuTree';
@@ -40,9 +40,9 @@ describe('MenuTab', () => {
     expect(wrapper.find('div.menu-sections').childAt(0).hasClass('menu-tree')).toBe(true);
     expect(wrapper.find('div.menu-sections').childAt(0).hasClass('menu-item-list')).toBe(false);
   });
-  xit('selects tab when clicked', () => {
+  it('selects tab when clicked', () => {
     const sections = [{title:'a', items:[]}];
-    const wrapper = shallow(<MenuTab title='c' sections={sections} />);
+    const wrapper = mount(<MenuTab title='c' sections={sections} />);
     expect(wrapper.find('h3.title.selected').length).toBe(0);
     wrapper.find('h3.title').simulate('click');
     expect(wrapper.find('h3.title.selected').length).toBe(1);
@@ -51,7 +51,7 @@ describe('MenuTab', () => {
     const sections = [{title:'a', items:[]}];
     const wrapper = mount(<MenuTab title='' selected={true} sections={sections} />);
     expect(wrapper.find('h3.title.selected').length).toBe(1);
-    wrapper.find('h3.title').simulate('click');
+    wrapper.find('h3.title.selected').simulate('click');
     expect(wrapper.find('h3.title.selected').length).toBe(0);
   });
 });
