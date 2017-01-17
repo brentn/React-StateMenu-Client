@@ -13,7 +13,7 @@ export default React.createClass({
     return {
       selected: false
     };
-  }
+  },
   mixins: [PureRenderMixin],
   select: function(event) {
     $('.menu-tab>.title.selected').removeClass('selected');

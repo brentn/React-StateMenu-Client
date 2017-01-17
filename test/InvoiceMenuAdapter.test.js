@@ -1,19 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../src/controllers/Section';
+import InvoiceMenuAdapter from '../src/components/InvoiceMenuAdapter';
 
-describe('Section', () => {
+describe('InvoiceMenuAdapter', () => {
+  const adapter = new InvoiceMenuAdapter({invoices:[]});
   describe('tabNames', () => {
     it('is a list of strings', () => {
-      expect(typeOf tabNames).to.be('Array');
+      const tabNames = adapter.tabNames();
       expect(tabNames.length).toBeGreaterThan(2);
-      expect(typeOf tabNames[0]).to.be('string');
+      expect(typeof tabNames[0]).toBe('string');
+      expect(typeof tabNames[1]).toBe('string');
     });
   });
 
   describe('getSectionsForTab()', () => {
     xit('returns 0 for state 0', () => {
-      
+
     });
   });
 });

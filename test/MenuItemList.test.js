@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import MenuItemList from '../src/components/MenuItemList';
 
@@ -19,21 +19,21 @@ describe('MenuItemList', () => {
     expect(wrapper.find('span.title').text()).toBe(title);
   });
   it('renders MenuItems as list items (when provided)', () => {
-    const items = [{}];
-    const wrapper = shallow(<MenuItemList items={items}/>);
+    const items = [{id:1}];
+    const wrapper = mount(<MenuItemList items={items}/>);
     expect(wrapper.find('li').length).toBe(1);
-    expect(wrapper.find('li').containsMatchingElement('MenuItem')).toBe(true);
+    expect(wrapper.find('li table.menu-item').length).toBe(1);
   });
   it('does not render a title when not provided', ()  => {
-    const wrapper = shallow(<MenuItemList items={[{}]} />);
-    expect(wrapper.find('span.title')).not.toExist();
+    const wrapper = shallow(<MenuItemList items={[{id:2}]} />);
+    expect(wrapper.find('span.title').length).toBe(0);
   });
   it('does not render a title when empty string provided', ()  => {
-    const wrapper = shallow(<MenuItemList title={''} items={[{}]} />);
+    const wrapper = shallow(<MenuItemList title={''} items={[{id:3}]} />);
     expect(wrapper.find('span.title').length).toBe(0);
   });
   it('does not render any items when none provided', () => {
-    const wrapper = shallow(<MenuItemList title={'Title'} items={[{}]} />);
+    const wrapper = shallow(<MenuItemList title={'Title'} items={[]} />);
     expect(wrapper.find('li').length).toBe(0);
   });
 });
