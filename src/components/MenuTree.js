@@ -13,7 +13,7 @@ function buildTree(items) {
   items.forEach(item => {
     if (item.parents.length > 0) {
       let parent = item.parents.slice(-1)[0];
-      tree.nodes.includes(parent) || tree.nodes.push(parent);
+      tree.nodes.indexOf(parent) >= 0 || tree.nodes.push(parent);
       tree.data[parent] = tree.data[parent] || [];
       tree.data[parent].push({
         parents: item.parents.slice(0,-1),

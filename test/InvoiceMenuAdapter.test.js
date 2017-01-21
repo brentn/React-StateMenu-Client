@@ -4,18 +4,16 @@ import InvoiceMenuAdapter from '../src/components/InvoiceMenuAdapter';
 
 describe('InvoiceMenuAdapter', () => {
   const adapter = new InvoiceMenuAdapter({invoices:[]});
-  describe('tabNames', () => {
-    it('is a list of strings', () => {
-      const tabNames = adapter.tabNames();
-      expect(tabNames.length).toBeGreaterThan(2);
-      expect(typeof tabNames[0]).toBe('string');
-      expect(typeof tabNames[1]).toBe('string');
+  describe('getTabs()', () => {
+    it('is a list of tabitems', () => {
+      const tabs = adapter.getTabs();
+      expect(tabs).toBeInstanceOf(Array);
+      expect(tabs.length).toBeGreaterThan(2);
+      expect(typeof tabs[0].title).toBe('string');
+      expect(tabs[0].sections).toBeInstanceOf(Array);
+      expect(typeof tabs[0].sections[0].title).toBe('string');
+      expect(tabs[0].sections[0].items.listItems).toBeInstanceOf(Array);
     });
   });
 
-  describe('getSectionsForTab()', () => {
-    xit('returns 0 for state 0', () => {
-
-    });
-  });
 });

@@ -25,18 +25,18 @@ const tabStatusList = {
 
 function showAllItems(tabName) {
   let validTabs = ["Submitted", "Approved", "Paying", "Paid"];
-  return (state.isFinance && validTabs.includes(tabName));
+  return (state.isFinance && (validTabs.indexOf(tabName) >= 0));
 }
 
 function showAccountsTree(tabName) {
   let validTabs = ["Submitted", "Approved", "Paying", "Paid"];
-  return (state.accounts && state.accounts.length>0 && validTabs.includes(tabName));
+  return (state.accounts && state.accounts.length>0 && (validTabs.indexOf(tabName) >= 0));
 }
 
 function tabInvoices(tabName) {
   let validStatuses = tabStatusList[tabName];
   return state.invoices.filter(invoice => {
-    return validStatuses.includes(invoice.status);
+    return validStatuses.indexOf(invoice.status) >= 0;
   });
 }
 
@@ -125,7 +125,7 @@ function buildTabSections(tabName) {
   }
   if (showAccountsTree(tabName)) {
     let accountInvoices = tabInvoices(tabName, state.invoices).filter(invoice => {
-      return state.accounts.includes(invoice.costCenter);
+      return state.accounts.indexOf(invoice.costCenter) >= 0;
     });
     if (accountInvoices.length>0) {
       let accountItems = buildAccountTree("My Accounts", accountInvoices);

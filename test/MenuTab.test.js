@@ -29,31 +29,20 @@ describe('MenuTab', () => {
     const wrapper = shallow(<MenuTab title='a' sections={DEFAULT_SECTIONS} />);
     expect(wrapper.find('div.menu-tab div.menu-sections').length).toBe(1);
   });
-  it('includes a MenuItemList when section items has an itemList',() => {
-    const sections = [{title:'a', items:{itemList:[]}}];
-    const wrapper = shallow(<MenuTab title='a' sections={sections} />);
-    console.log(wrapper.find('div.menu-sections').html())
-    expect(wrapper.find('div.menu-sections').childAt(0).containsMatchingElement(<MenuItemList />)).toBe(true);
-    expect(wrapper.find('div.menu-sections').childAt(0).hasClass('menu-tree')).toBe(false);
-  });
-  it('includes a MenuTree when section items have subitems', () => {
-    const sections = [{title:'c', items:[{title:'a', items:[]}]}];
-    const wrapper = mount(<MenuTab title='c' sections={sections} />);
-    expect(wrapper.find('div.menu-sections').childAt(0).hasClass('menu-tree')).toBe(true);
-    expect(wrapper.find('div.menu-sections').childAt(0).hasClass('menu-item-list')).toBe(false);
-  });
   it('selects tab when clicked', () => {
-    const sections = [{title:'a', items:[]}];
+    const sections = [{title:'a', items:{itemList:[]}}];
     const wrapper = mount(<MenuTab title='c' sections={sections} />);
     expect(wrapper.find('h3.title.selected').length).toBe(0);
     wrapper.find('h3.title').simulate('click');
     expect(wrapper.find('h3.title.selected').length).toBe(1);
   });
-  xit('deselects tab when clicked', () => {
-    const sections = [{title:'a', items:[]}];
-    const wrapper = mount(<MenuTab title='' selected={true} sections={sections} />);
-    expect(wrapper.find('h3.title.selected').length).toBe(1);
-    wrapper.find('h3.title.selected').simulate('click');
-    expect(wrapper.find('h3.title.selected').length).toBe(0);
+  it('deselects first tab when another tab is clicked', () => {
+    const wrapper = mount(<div><MenuTab title='c' sections={[]} /><MenuTab title='d' sections={[]}/></div>);
+    wrapper.find('h3').first().simulate('click');
+    expect(wrapper.find('h3').first().hasClass('selected')).toBe(true);
+    expect(wrapper.find('h3').last().hasClass('selected')).toBe(false);
+    wrapper.find('h3').last().simulate('click');
+    //expect(wrapper.find('h3').first().hasClass('selected')).toBe(false);
+    expect(wrapper.find('h3').last().hasClass('selected')).toBe(true);
   });
 });

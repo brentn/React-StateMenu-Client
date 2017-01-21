@@ -32,8 +32,8 @@ describe('MenuTree', () => {
   });
   it('renders subtree if parents is not empty', () => {
     var items = [{parents:['parent'], item:{id:1}}];
-    const wrapper = mount(<MenuTree title='abc' items={items} />);
-    expect(wrapper.find('div.menu-tree ul li .menu-tree').length).toBe(1);
+    const wrapper = shallow(<MenuTree title='abc' items={items} />);
+    expect(wrapper.find('div.menu-tree').find('.menu-tree').length).toBe(1);
   });
   it('expands subtree if clicked when collapsed', () => {
     const wrapper = mount(<MenuTree title='abc' items={SINGLE_ITEM} />);

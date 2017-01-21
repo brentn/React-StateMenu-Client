@@ -7,15 +7,15 @@ import MenuTab from '../src/components/MenuTab';
 describe('Menu', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Menu menuData={[]}/>, div);
+    ReactDOM.render(<Menu tabs={[]}/>, div);
   });
   it('renders a menu component', () => {
-    const wrapper = shallow(<Menu menuData={[]} />);
+    const wrapper = shallow(<Menu tabs={[]} />);
     expect(wrapper.find('div.menu').length).toBe(1);
   });
   it('opens the first tab', () => {
-    const menuData = [<MenuTab key='1' title='a' sections={[]} />, <MenuTab key='2' title='a' sections={[]} />];
-    const wrapper = mount(<Menu menuData={menuData} />);
+    const tabs = [{title:'a', sections:[]},{title:'b', sections:[]}];
+    const wrapper = mount(<Menu tabs={tabs} />);
     expect(wrapper.find('h3').length).toBe(2);
     expect(wrapper.find('h3.title').first().props().className).toBe('title selected');
   });
