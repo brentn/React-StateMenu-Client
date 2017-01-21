@@ -6,7 +6,8 @@ export default React.createClass({
     item: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
       title: React.PropTypes.string,
-      tooltip: React.PropTypes.string
+      tooltip: React.PropTypes.string,
+      selectItem: React.PropTypes.function
     }).isRequired,
     onClick: React.PropTypes.func
   },
@@ -20,10 +21,12 @@ export default React.createClass({
   },
   mixins: [PureRenderMixin],
   selectItem: function() {
-    this.props.item.selectItem(this.props.item.id);
+    if (this.props.item.selectItem) {
+      this.props.item.selectItem(this.props.item.id);
+    }
   },
   render: function() {
-    return <span className="compact menu-item" title={this.props.item.tooltip} onClick={this.selectItem}>
+    return <span className="tree-item menu-item" title={this.props.item.tooltip} onClick={this.selectItem}>
       {this.props.item.title}
     </span>
   }

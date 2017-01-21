@@ -8,22 +8,15 @@ export default React.createClass({
       title: React.PropTypes.string,
       subtitle: React.PropTypes.string,
       imageUrl: React.PropTypes.string,
-      tooltip: React.PropTypes.string
-    }).isRequired,
-    onClick: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      item: {
-        title: 'Menu item',
-        subtitle: '',
-        tooltip: ''
-      }
-    };
+      tooltip: React.PropTypes.string,
+      selectItem: React.PropTypes.function
+    }).isRequired
   },
   mixins: [PureRenderMixin],
   selectItem: function() {
-    this.props.item.selectItem(this.props.item.id);
+    if (this.props.item.selectItem) {
+      this.props.item.selectItem(this.props.item.id);
+    }
   },
   render: function() {
     return <table className={"menu-item"} title={this.props.item.tooltip} onClick={this.selectItem}>

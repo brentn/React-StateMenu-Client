@@ -102,7 +102,7 @@ body {
 .menu .menu-tree .title.expanded~ul {
   max-height:500px;
 }
-.menu .menu-tree .compact.menu-item {
+.menu .menu-tree .tree-item {
   color:darkgrey;
   font-size:.8em;
 }

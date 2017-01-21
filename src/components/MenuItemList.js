@@ -6,7 +6,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     title: React.PropTypes.string,
-    items: React.PropTypes.array
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired
+    }))
   },
   getDefaultProps: function() {
     return {
