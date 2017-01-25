@@ -9,17 +9,13 @@ export default React.createClass({
       subtitle: React.PropTypes.string,
       imageUrl: React.PropTypes.string,
       tooltip: React.PropTypes.string,
-      selectItem: React.PropTypes.function
-    }).isRequired
+    }).isRequired,
+    selectedItemId: React.PropTypes.number
   },
   mixins: [PureRenderMixin],
-  selectItem: function() {
-    if (this.props.item.selectItem) {
-      this.props.item.selectItem(this.props.item.id);
-    }
-  },
   render: function() {
-    return <table className={"menu-item"} title={this.props.item.tooltip} onClick={this.selectItem}>
+    let selected = (this.props.item.id === this.props.selectedItemId?" selected":"");
+    return <table className={"menu-item" + selected} title={this.props.item.tooltip} >
       <tbody>
         <tr>
           <td><img className="image" src={this.props.item.imageUrl} role='presentation' /></td>

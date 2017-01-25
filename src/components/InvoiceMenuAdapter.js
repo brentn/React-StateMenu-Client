@@ -40,12 +40,6 @@ function tabInvoices(tabName) {
   });
 }
 
-// function getShortTitle(invoice) {
-//   let id = '#' + ('0000' + invoice.id).slice(-5);
-//   let vendorId = invoice.vendorId?invoice.vendorId:'no vendor';
-//   return id + ' : ' + vendorId + ' $' + invoice.grossAmount.toFixed(2);
-// }
-
 function getMenuTitle(invoice) {
   return (invoice.vendorId || 'NO VENDOR');
 }
@@ -62,14 +56,21 @@ function getTooltip(invoice) {
   return "AP #" + ('00000' + invoice.id).slice(-4);
 }
 
-function selectItem(id) {
+function itemCallback(id) {
   // let item = $(evt.target).closest('.menu-item');
   $('.menu .menu-item.selected').removeClass('selected');
   // $(item).addClass('selected');
   console.log('selecting ',id);
 }
 
+function newItemCallback() {
+  console.log('New Item')
+}
+
 function itemFrom(invoice) {
+  let flags = [];
+  if (state.isFinance && invoice.privateComments) flags.push('private');
+  if (state.isFinance && invoice.moreInfo) flags.push('moreinfo');
   return {
     id: invoice.id,
     imageUrl: getImageUrl(invoice.userId),
@@ -77,7 +78,8 @@ function itemFrom(invoice) {
     subtitle: getMenuSubtitle(invoice),
     tooltip: getTooltip(invoice),
     total: invoice.grossAmount,
-    selectItem: selectItem
+    flags: flags,
+    callback: itemCallback
   }
 }
 
@@ -157,10 +159,25 @@ export default class InvoiceMenuAdapter {
     });
   }
 
+  getFlags() {
+    let flags = [];
+    if (state.isFinance) flags.push('finance');
+    if (state.accounts.length>0) flags.push ('signing-authority');
+    return flags;
+  }
+
+  newItem() {
+    return {
+      text: 'New Invoice',
+      callback: function() { newItemCallback(); }
+    }
+  }
+
   TEST(name) {
     function item() {
       let id = Math.floor((Math.random() * 100) + 1);
-      return {id:id, title:'item '+id, subtitle:'subtitle', iimageUrl:'', tooltip:'tooltip', selectItem:selectItem};
+      return {id:id, title:'item '+id, subtitle:'subtitle', imageUrl:'',
+      tooltip:'tooltip', callback:itemCallback};
     }
     function treeItem() {
       return {parents:['root'], item:item()};

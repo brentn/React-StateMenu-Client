@@ -14,6 +14,7 @@ export default React.createClass({
     }
   },
   render: function() {
-    return <Menu tabs={menuAdapter.getTabs()} />
+    return <Menu tabs={menuAdapter.getTabs()}
+    flags={menuAdapter.getFlags()} newItem={menuAdapter.newItem()} />
   }
 });

@@ -34,7 +34,9 @@ export default React.createClass({
       item: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired
       }).isRequired
-    })).isRequired
+    })).isRequired,
+    selectItem: React.PropTypes.func.isRequired,
+    selectedItemId: React.PropTypes.number
   },
   mixins: [PureRenderMixin],
   toggle: function(event) {
@@ -50,10 +52,10 @@ export default React.createClass({
       <div className="title" onClick={this.toggle}>{this.props.title}</div>
       <ul>
         {tree.nodes.sort().map(node =>
-          <li key={node}><MenuTree title={node} items={tree.data[node]} /></li>
+          <li key={node}><MenuTree title={node} items={tree.data[node]} selectItem={this.props.selectItem} selectedItemId={this.props.selectedItemid} /></li>
         )}
         {tree.leaves.sort((a, b) => {return a.id > b.id}).map(leaf =>
-          <li key={leaf.id}><TreeItem item={leaf} /></li>
+          <li key={leaf.id} onClick={() => this.props.selectItem(leaf.id)}><TreeItem item={leaf} selectedItemId={this.props.selectedItemid} /></li>
         )}
       </ul>
     </div>;

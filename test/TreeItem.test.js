@@ -36,4 +36,12 @@ describe('TreeItem', () => {
     wrapper.find('span').simulate('click');
     expect(clickHandler.calledOnce).toBe(true);
   });
+  it('is not selected by default', () => {
+    const wrapper = shallow(<TreeItem item={item} />);
+    expect(wrapper.find('.tree-item').hasClass('selected')).toBe(false);
+  });
+  it('adds selected class if id matches selectedItemId', () => {
+    const wrapper = shallow(<TreeItem item={item} selectedItemId={item.id}/>);
+    expect(wrapper.find('.tree-item').hasClass('selected')).toBe(true);
+  })
 });

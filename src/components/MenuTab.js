@@ -1,6 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import TabSection from './TabSection';
+import TabSection from '../containers/TabSection';
 import $ from '../../lib/jquery-3.1.0.min.js';
 
 export default React.createClass({

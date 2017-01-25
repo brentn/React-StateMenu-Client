@@ -48,5 +48,12 @@ describe('MenuItem', () => {
     wrapper.find('table').simulate('click');
     expect(clickHandler.calledOnce).toBe(true);
   });
-
+  it('is not selected by default', () => {
+    const wrapper = shallow(<MenuItem item={item} />);
+    expect(wrapper.find('.menu-item').hasClass('selected')).toBe(false);
+  });
+  it('adds selected class if id matches selectedItemId', () => {
+    const wrapper = shallow(<MenuItem item={item} selectedItemId={item.id}/>);
+    expect(wrapper.find('.menu-item').hasClass('selected')).toBe(true);
+  });
 });
