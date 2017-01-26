@@ -85,10 +85,11 @@ body {
 
 .menu .menu-item-list>.title {
   margin-top:10px;
-  border-radius:8px;
+  border-radius:5px;
   padding:4px 4px 4px 10px;
   display:block;
-  background-color: #60b7cc;
+  background-color: #4c6f4c;
+  color: white;
 }
 .menu .menu-item-list {
   list-style:none;
@@ -131,8 +132,27 @@ body {
   max-height:500px;
 }
 .menu .menu-tree .tree-item {
-  color:darkgrey;
-  font-size:.8em;
+  color:navy;
+  font-size:.7em;
+  padding-right:15px;
+}
+
+.menu .tree-item .flag.moreinfo {
+  float:right;
+  height:12px;
+  width:12px;
+  background-image:url('images/info.png');
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+
+.menu .tree-item .flag.private {
+  float:right;
+  height:12px;
+  width:12px;
+  background-image:url('images/private.png');
+  background-repeat:no-repeat;
+  background-size:contain;
 }
 
 .menu .menu-item {
@@ -143,8 +163,10 @@ body {
   position:relative;
 }
 .menu .menu-item.selected {
+  transition: background-color 1.5s ease-out;
   font-weight:bold;
   border: solid 1px #416d0b;
+  background-color:lavender;
   border-radius:5px;
 }
 .menu .tree-item.selected:before {

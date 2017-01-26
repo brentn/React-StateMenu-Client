@@ -3,17 +3,19 @@
 const state = {
   userId:1,
   isFinance:true,
-  accounts:['110100', '110140'],
+  accounts:[],//['110100', '110140'],
   selectedId:null,
   invoices:[
-    {id:1, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:204.22, costCenter: '123000'},
-    {id:2, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:39.31, costCenter: '110100'},
-    {id:3, status:1, userId:2, apprUserId:1, vendorId:'VENDOR', grossAmount:90, costCenter: '123000'},
-    {id:5, status:1, userId:2, apprUserId:1, vendorId:'BIGBOY', grossAmount:903.12, costCenter: '110140'},
-    {id:4, status:1, userId:1, apprUserId:2, vendorId:'GRATOY', grossAmount:84.23, costCenter:'110100'}
+    {id:1, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:204.22, costCenter: '123000', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')},
+    {id:2, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:39.31, costCenter: '110100', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')},
+    {id:3, status:4, userId:2, apprUserId:1, vendorId:'VENDOR', grossAmount:90, costCenter: '123000', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21'), privateComments:'a'},
+    {id:5, status:4, userId:2, apprUserId:1, vendorId:'BIGBOY', grossAmount:903.12, costCenter: '110140', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21'), moreInfo:true},
+    {id:4, status:10, userId:1, apprUserId:2, vendorId:'GRATOY', grossAmount:84.23, costCenter:'110100', company:'GAiN', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')}
   ]
 }
-const tabNames = ["Draft", "Submitted", "Approved", "Paying", "Paid", "Deleted"];
+const Submitted = "Submitted";
+const Approved = "Approved";
+const tabNames = ["Draft", Submitted, Approved, "Paying", "Paid", "Deleted"];
 const tabStatusList = {
   Draft: [0],
   Submitted: [1, 2, 3],
@@ -24,12 +26,12 @@ const tabStatusList = {
 }
 
 function showAllItems(tabName) {
-  let validTabs = ["Submitted", "Approved", "Paying", "Paid"];
+  let validTabs = [Submitted, Approved, "Paying", "Paid"];
   return (state.isFinance && (validTabs.indexOf(tabName) >= 0));
 }
 
 function showAccountsTree(tabName) {
-  let validTabs = ["Submitted", "Approved", "Paying", "Paid"];
+  let validTabs = [Submitted, Approved, "Paying", "Paid"];
   return (state.accounts && state.accounts.length>0 && (validTabs.indexOf(tabName) >= 0));
 }
 
@@ -42,6 +44,14 @@ function tabInvoices(tabName) {
 
 function getMenuTitle(invoice) {
   return (invoice.vendorId || 'NO VENDOR');
+}
+
+function getMenuTreeTitle(invoice) {
+  let date = invoice.invoiceDate.getMonth() + "/" + invoice.invoiceDate.getDate();
+  let account = "(" + (invoice.costCenter || "xxxxxx") + ")";
+  let vendor = (invoice.vendorId || "unknown");
+  let amount = "$" + invoice.grossAmount;
+  return date + " " + account + " " + vendor + " " + amount;
 }
 
 function getMenuSubtitle(invoice) {
@@ -61,9 +71,6 @@ function newItemCallback() {
 }
 
 function itemFrom(invoice) {
-  let flags = [];
-  if (state.isFinance && invoice.privateComments) flags.push('private');
-  if (state.isFinance && invoice.moreInfo) flags.push('moreinfo');
   return {
     id: invoice.id,
     imageUrl: getImageUrl(invoice.userId),
@@ -71,6 +78,21 @@ function itemFrom(invoice) {
     subtitle: getMenuSubtitle(invoice),
     tooltip: getTooltip(invoice),
     total: invoice.grossAmount,
+  }
+}
+
+function hasPrivateComments(invoice) {
+  return invoice.privateComments && invoice.privateComments.length>0;
+}
+
+function treeItemFrom(invoice) {
+  let flags = [];
+  if (state.isFinance && hasPrivateComments(invoice)) flags.push('private');
+  if (state.isFinance && invoice.moreInfo) flags.push('moreinfo');
+  return {
+    id: invoice.id,
+    title: getMenuTreeTitle(invoice),
+    tooltip: getTooltip(invoice),
     flags: flags,
   }
 }
@@ -83,23 +105,44 @@ function itemsFrom(invoices) {
 
 function buildVendorTree(title, invoices) {
   return {
-    title: title,
+    title: title + " ("+invoices.length+")",
     items: {
       treeItems: invoices.map(invoice => {
         let vendor = invoice.vendorId || 'NO_VENDOR';
         let letter = invoice.vendorId?vendor.substr(0,1).toUpperCase():'?';
-        return {parents: [vendor, letter], item:itemFrom(invoice)};
+        return {parents: [vendor, letter], item:treeItemFrom(invoice)};
       })
     }
   };
 }
 
-function buildAccountTree(title, invoices) {
-  return {
-    title: title,
+function buildFinanceTree(title, invoices) {
+  return{
+    title: title + " ("+invoices.length+")",
     items: {
       treeItems: invoices.map(invoice => {
-        return {parents: [invoice.costCenter || '??????'], item:itemFrom(invoice)};
+        if (invoice.status === 4) {
+          let company = invoice.company || "PTC";
+          let method = invoice.paymentMethod || "eft";
+          let count = invoices.filter(i => i.status===4 && (i.company || "PTC") === company && (i.paymentMethod || "eft" === method)).length;
+          let branch = company + " (" + (method) + ") (" + count + ")";
+          return {parents: [branch], item: treeItemFrom(invoice)};
+        } else {
+          let count = invoices.filter(i => i.status !== 4).length;
+          let branch = "Pending Import (" + count + ")";
+          return {parents: [branch], item: treeItemFrom(invoice)};
+        }
+      })
+    }
+  }
+}
+
+function buildAccountTree(title, invoices) {
+  return {
+    title: title + " ("+invoices.length+")",
+    items: {
+      treeItems: invoices.map(invoice => {
+        return {parents: [invoice.costCenter || '??????'], item:treeItemFrom(invoice)};
       })
     }
   };
@@ -112,7 +155,10 @@ function buildTabSections(tabName) {
   if (showAllItems(tabName)) {
     let allInvoices = tabInvoices(tabName, state.invoices);
     if (allInvoices.length > 0) {
-      let allItems = buildVendorTree("All Items", allInvoices);
+      let allItems = (tabName === Approved?
+        buildFinanceTree("Finance", allInvoices):
+        buildVendorTree("All Items", allInvoices)
+      );
       sections.push(allItems);
       myTitle = MY_TITLE;
     }
@@ -122,13 +168,13 @@ function buildTabSections(tabName) {
       return state.accounts.indexOf(invoice.costCenter) >= 0;
     });
     if (accountInvoices.length>0) {
-      let accountItems = buildAccountTree("My Accounts", accountInvoices);
+      let accountItems = buildAccountTree("My Accounts", accountInvoices)
       sections.push(accountItems);
       myTitle = MY_TITLE;
     }
   }
-  if (tabName === "Submitted") {
-    let approvableInvoices = tabInvoices("Submitted", state.invoices).filter(invoice  => {
+  if (tabName === Submitted) {
+    let approvableInvoices = tabInvoices(Submitted, state.invoices).filter(invoice  => {
       return invoice.apprUserId === state.userId;
     });
     if (approvableInvoices.length > 0) {
