@@ -142,10 +142,12 @@ body {
   font-weight:normal;
   position:relative;
 }
-.menu.menu-item.selected {
+.menu .menu-item.selected {
   font-weight:bold;
+  border: solid 1px #416d0b;
+  border-radius:5px;
 }
-.menu .menu-item.selected:before {
+.menu .tree-item.selected:before {
   content:'\21AA';
   position:absolute;
   right:5px;

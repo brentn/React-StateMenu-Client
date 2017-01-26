@@ -12,8 +12,9 @@ function selectItem(state, id) {
 }
 
 function addItem(state, item) {
-  let newItems = state.items.push(item);
-  return state.set('items': newItems);
+  return Object.assign({}, state, {
+    items: state.items.slice().push(item)
+  })
 }
 
 export default function(state = Map(), action) {
