@@ -1,15 +1,13 @@
 import React from 'react';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import {connect} from 'react-redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import reducer from '../reducer';
+import {selectTab} from '../actions';
 import MenuTab from './MenuTab';
 import MenuFlags from './MenuFlags';
 import MenuButton from './MenuButton';
 
-let store = createStore(reducer);
 
-export default React.createClass({
+const Menu = React.createClass({
   propTypes: {
     flags: React.PropTypes.arrayOf(React.PropTypes.string),
     tabs: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -23,15 +21,25 @@ export default React.createClass({
   },
   mixins: [PureRenderMixin],
   render: function() {
-    return <Provider store={store}>
-      <div className="menu">
+    return <div className="menu">
         <MenuFlags flags={this.props.flags} />
         <MenuButton newItem={this.props.newItem} />
         {this.props.tabs.map(tab =>
-          <MenuTab key={tab.title} title={tab.title}
-          selected={tab === this.props.tabs[0]} sections={tab.sections} />
+          <MenuTab key={tab.title} title={tab.title} sections={tab.sections} select={this.props.selectTab}
+          isSelected={tab.title === (this.props.selectedTab || (this.props.tabs.length>0?this.props.tabs[0].title:''))} />
         )}
       </ div>
-    </ Provider>;
   }
 });
+
+function mapStateToProps(state) {
+  return {selectedTab: state.selectedTab};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {selectTab: (name) => {
+    dispatch(selectTab(name));
+  }}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Menu);
