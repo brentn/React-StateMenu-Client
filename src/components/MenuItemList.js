@@ -22,7 +22,7 @@ export default React.createClass({
     return <ul className="menu-item-list" >
       {(this.props.title?<span className='title'>{this.props.title}</span>:"")}
       {this.props.items.map(item =>
-          <li key={item.id} onClick={() => this.props.selectItem(item.id)}><MenuItem item={item} selectedItemid={this.props.selectedItemid} /></li>
+          <li key={item.id} onClick={() => this.props.selectItem(item.id)}><MenuItem item={item} isSelected={(item.id === this.props.selectedItemId)} /></li>
       )}
     </ul>;
   }

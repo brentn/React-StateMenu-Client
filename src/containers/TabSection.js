@@ -35,7 +35,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {selectItem: (id) => {
     dispatch(selectItem(id));
-    console.log('SELECTING '+id)
   }}
 }
 

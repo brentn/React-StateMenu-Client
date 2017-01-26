@@ -1,4 +1,4 @@
-import $ from '../../lib/jquery-3.1.0.min';
+//import $ from '../../lib/jquery-3.1.0.min';
 
 const state = {
   userId:1,
@@ -56,13 +56,6 @@ function getTooltip(invoice) {
   return "AP #" + ('00000' + invoice.id).slice(-4);
 }
 
-function itemCallback(id) {
-  // let item = $(evt.target).closest('.menu-item');
-  $('.menu .menu-item.selected').removeClass('selected');
-  // $(item).addClass('selected');
-  console.log('selecting ',id);
-}
-
 function newItemCallback() {
   console.log('New Item')
 }
@@ -79,7 +72,6 @@ function itemFrom(invoice) {
     tooltip: getTooltip(invoice),
     total: invoice.grossAmount,
     flags: flags,
-    callback: itemCallback
   }
 }
 
@@ -176,8 +168,7 @@ export default class InvoiceMenuAdapter {
   TEST(name) {
     function item() {
       let id = Math.floor((Math.random() * 100) + 1);
-      return {id:id, title:'item '+id, subtitle:'subtitle', imageUrl:'',
-      tooltip:'tooltip', callback:itemCallback};
+      return {id:id, title:'item '+id, subtitle:'subtitle', imageUrl:'', tooltip:'tooltip'};
     }
     function treeItem() {
       return {parents:['root'], item:item()};

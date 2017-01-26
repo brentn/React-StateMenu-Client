@@ -8,7 +8,7 @@ export default React.createClass({
       title: React.PropTypes.string,
       tooltip: React.PropTypes.string,
     }).isRequired,
-    selectedItemId: React.PropTypes.number
+    isSelected: React.PropTypes.bool.isRequired
   },
   getDefaultProps: function() {
     return {
@@ -20,8 +20,7 @@ export default React.createClass({
   },
   mixins: [PureRenderMixin],
   render: function() {
-    let selected = (this.props.item.id === this.props.selectedItemId?" selected":"");
-    return <span className={"tree-item menu-item" + selected} title={this.props.item.tooltip}>
+    return <span className={"tree-item menu-item" + (this.props.isSelected?" selected":"")} title={this.props.item.tooltip}>
       {this.props.item.title}
     </span>
   }

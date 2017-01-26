@@ -52,10 +52,10 @@ export default React.createClass({
       <div className="title" onClick={this.toggle}>{this.props.title}</div>
       <ul>
         {tree.nodes.sort().map(node =>
-          <li key={node}><MenuTree title={node} items={tree.data[node]} selectItem={this.props.selectItem} selectedItemId={this.props.selectedItemid} /></li>
+          <li key={node}><MenuTree title={node} items={tree.data[node]} selectItem={this.props.selectItem} selectedItemId={this.props.selectedItemId} /></li>
         )}
         {tree.leaves.sort((a, b) => {return a.id > b.id}).map(leaf =>
-          <li key={leaf.id} onClick={() => this.props.selectItem(leaf.id)}><TreeItem item={leaf} selectedItemId={this.props.selectedItemid} /></li>
+          <li key={leaf.id} onClick={() => this.props.selectItem(leaf.id)}><TreeItem item={leaf} isSelected={leaf.id === this.props.selectedItemId} /></li>
         )}
       </ul>
     </div>;
