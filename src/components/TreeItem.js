@@ -1,5 +1,4 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   propTypes: {
@@ -21,7 +20,6 @@ export default React.createClass({
       }
     };
   },
-  mixins: [PureRenderMixin],
   render: function() {
     return <span className={"tree-item menu-item" + (this.props.isSelected?" selected":"")} title={this.props.item.tooltip}>
       {this.props.item.title}

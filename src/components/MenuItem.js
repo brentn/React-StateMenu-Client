@@ -1,5 +1,4 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   propTypes: {
@@ -12,7 +11,6 @@ export default React.createClass({
     }).isRequired,
     isSelected: React.PropTypes.bool.isRequired
   },
-  mixins: [PureRenderMixin],
   render: function() {
     return <table className={"menu-item" + (this.props.isSelected?" selected":"")} title={this.props.item.tooltip} >
       <tbody>

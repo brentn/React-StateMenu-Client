@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {selectTab} from '../actions';
 import MenuTab from './MenuTab';
 import MenuFlags from './MenuFlags';
@@ -19,7 +18,6 @@ const Menu = React.createClass({
       callback: React.PropTypes.func.isRequired
     })
   },
-  mixins: [PureRenderMixin],
   render: function() {
     return <div className="menu">
         <MenuFlags flags={this.props.flags} />
@@ -33,7 +31,7 @@ const Menu = React.createClass({
 });
 
 function mapStateToProps(state) {
-  return {selectedTab: state.selectedTab};
+  return {selectedTab: state.menu.selectedTab};
 }
 
 function mapDispatchToProps(dispatch) {

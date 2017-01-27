@@ -1,9 +1,7 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import MenuItem from './MenuItem';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
   propTypes: {
     title: React.PropTypes.string,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
