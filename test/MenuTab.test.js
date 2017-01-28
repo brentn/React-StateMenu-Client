@@ -8,9 +8,10 @@ import MenuItemList from '../src/components/MenuItemList';
 
 describe('MenuTab', () => {
   let DEFAULT_SECTIONS = [{title:'', items:{}}];
+  let CALLBACK = function() {};
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<MenuTab title='' sections={DEFAULT_SECTIONS} />, div);
+    ReactDOM.render(<MenuTab title='' sections={DEFAULT_SECTIONS} select={CALLBACK} isSelected={false}/>, div);
   });
   it('renders a menu-tab item', () => {
     const wrapper = shallow(<MenuTab title='' sections={DEFAULT_SECTIONS} />);

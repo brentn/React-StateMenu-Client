@@ -7,7 +7,7 @@ export default React.createClass({
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
     })),
-    selectItem: React.PropTypes.func.isRequired,
+    selectItem: React.PropTypes.func,
     selectedItemId: React.PropTypes.number
   },
   getDefaultProps: function() {

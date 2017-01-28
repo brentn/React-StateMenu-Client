@@ -86,14 +86,16 @@ function hasPrivateComments(invoice) {
 }
 
 function treeItemFrom(invoice) {
-  let flags = [];
-  if (state.isFinance && hasPrivateComments(invoice)) flags.push('private');
-  if (state.isFinance && invoice.moreInfo) flags.push('moreinfo');
+  let priv = (state.isFinance && hasPrivateComments(invoice));
+  let info = (state.isFinance && invoice.moreInfo);
   return {
     id: invoice.id,
     title: getMenuTreeTitle(invoice),
     tooltip: getTooltip(invoice),
-    flags: flags,
+    flags: {
+      private: priv,
+      info: info
+    }
   }
 }
 

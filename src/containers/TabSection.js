@@ -4,7 +4,7 @@ import MenuItemList from '../components/MenuItemList';
 import MenuTree from '../components/MenuTree';
 import {toggleTree, selectItem} from '../actions';
 
-const TabSection = React.createClass({
+export const TabSection = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
     items: React.PropTypes.shape({
@@ -23,9 +23,9 @@ const TabSection = React.createClass({
       {(items.treeItems?
         <MenuTree title={this.props.title}
                   items={items.treeItems}
-                  selectItem={this.props.selectItem}
                   expandedTrees={this.props.expandedTrees}
-                  callback={this.props.toggleTree}
+                  nodeCallback={this.props.toggleTree}
+                  itemCallback={this.props.selectItem}
                   selectedItemId={this.props.selectedItemId} />:"")
       }
       {(items.listItems?<MenuItemList title={this.props.title} items={items.listItems} selectItem={this.props.selectItem} selectedItemId={this.props.selectedItemId}/>:"")}
@@ -36,7 +36,7 @@ const TabSection = React.createClass({
 function mapStateToProps(state) {
   return {
     selectedItemId: state.menu.selectedItemId,
-    expandedTrees: state.expandedTrees 
+    expandedTrees: state.expandedTrees
   };
 }
 

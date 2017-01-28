@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import MenuItem from '../src/components/MenuItem';
 
 describe('MenuItem', () => {
-  let item = {id:0};
+  let item = {id:0, isSelected:false};
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<MenuItem item={item} />, div);
@@ -41,19 +40,16 @@ describe('MenuItem', () => {
     const wrapper = shallow(<MenuItem item={item} />);
     expect(wrapper.find('span.subtitle').text()).toBe(subtitle);
   });
-  it('fires item.selectItem on click', () => {
-    const clickHandler = sinon.spy();
-    item.selectItem = clickHandler;
-    const wrapper = shallow(<MenuItem item={item} />);
-    wrapper.find('table').simulate('click');
-    expect(clickHandler.calledOnce).toBe(true);
-  });
   it('is not selected by default', () => {
-    const wrapper = shallow(<MenuItem item={item} />);
+    const wrapper = shallow(<MenuItem item={item}/>);
     expect(wrapper.find('.menu-item').hasClass('selected')).toBe(false);
   });
-  it('adds selected class if id matches selectedItemId', () => {
-    const wrapper = shallow(<MenuItem item={item} selectedItemId={item.id}/>);
+  it('is not selected if isSelected is false', () => {
+    const wrapper = shallow(<MenuItem item={item} isSelected={false}/>);
+    expect(wrapper.find('.menu-item').hasClass('selected')).toBe(false);
+  });
+  it('adds selected class if isSelected is true', () => {
+    const wrapper = shallow(<MenuItem item={item} isSelected={true}/>);
     expect(wrapper.find('.menu-item').hasClass('selected')).toBe(true);
   });
 });

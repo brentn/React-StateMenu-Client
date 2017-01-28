@@ -9,7 +9,7 @@ export default React.createClass({
       imageUrl: React.PropTypes.string,
       tooltip: React.PropTypes.string,
     }).isRequired,
-    isSelected: React.PropTypes.bool.isRequired
+    isSelected: React.PropTypes.bool
   },
   render: function() {
     return <table className={"menu-item" + (this.props.isSelected?" selected":"")} title={this.props.item.tooltip} >

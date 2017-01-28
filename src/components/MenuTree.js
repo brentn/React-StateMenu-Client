@@ -39,34 +39,31 @@ export default React.createClass({
       }).isRequired
     })).isRequired,
     expandedTrees: React.PropTypes.object.isRequired,
-    callback: React.PropTypes.func.isRequired,
-    selectItem: React.PropTypes.func.isRequired,
+    nodeCallback: React.PropTypes.func.isRequired,
+    itemCallback: React.PropTypes.func.isRequired,
     selectedItemId: React.PropTypes.number
   },
   componentWillMount: function() {
-    this.id = newId()
-  },
-  toggle: function() {
-    this.props.callback(this.id);
+    this.id = newId();
   },
   render: function() {
     let tree = buildTree(this.props.items);
-    let classes = "title" + (this.props.expandedTrees.includes(this.id)?" expanded":"");
+    let classes = "title" + (this.props.expandedTrees && this.props.expandedTrees.includes(this.id)?" expanded":"");
     return <div className="menu-tree" >
-      <div className={classes} onClick={this.toggle}>{this.props.title}</div>
+      <div className={classes} onClick={() => this.props.nodeCallback(this.id)}>{this.props.title}</div>
       <ul>
         {tree.nodes.sort().map(node =>
           <li key={node}>
             <MenuTree title={node}
                       items={tree.data[node]}
-                      selectItem={this.props.selectItem}
                       expandedTrees={this.props.expandedTrees}
-                      callback={this.props.callback}
+                      nodeCallback={this.props.nodeCallback}
+                      itemCallback={this.props.itemCallback}
                       selectedItemId={this.props.selectedItemId} />
           </li>
         )}
         {tree.leaves.sort((a, b) => {return a.id > b.id}).map(leaf =>
-          <li key={leaf.id} onClick={() => this.props.selectItem(leaf.id)}><TreeItem item={leaf} isSelected={leaf.id === this.props.selectedItemId} /></li>
+          <li key={leaf.id} onClick={() => this.props.itemCallback(leaf.id)}><TreeItem item={leaf} isSelected={leaf.id === this.props.selectedItemId} /></li>
         )}
       </ul>
     </div>;
