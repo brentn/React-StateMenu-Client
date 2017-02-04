@@ -1,52 +1,52 @@
 [
   {
-    "invoiceId": "1",
-    "state": "0",
-    "userId": "3",
-    "invoiceDate": "1/1/2017",
-    "vendorId": "VENDOR1",
-    "amount": "10"
+    "InvoiceId": "1",
+    "Status": "0",
+    "UserId": "3",
+    "InvoiceDate": "2017-1-1",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 10
   },{
-    "invoiceId": "2",
-    "state": "0",
-    "userId": "3",
-    "invoiceDate": "1/2/2017",
-    "vendorId": "VENDOR2",
-    "amount": "10.01"
+    "InvoiceId": "2",
+    "Status": "0",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-1",
+    "VendorId": "VENDOR2",
+    "GrossAmount": 10.01
   },{
-    "invoiceId": "3",
-    "state": "1",
-    "userId": "3",
-    "invoiceDate": "1/3/2017",
-    "vendorId": "VENDOR1",
-    "amount": "19.95"
+    "InvoiceId": "3",
+    "Status": "1",
+    "UserId": "3",
+    "InvoiceDate": "2017-3-1",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 19.95
   },{
-    "invoiceId": "4",
-    "state": "0",
-    "userId": "3",
-    "invoiceDate": "2/1/2017",
-    "vendorId": "VENDOR2",
-    "amount": "9.99"
+    "InvoiceId": "4",
+    "Status": "0",
+    "UserId": "3",
+    "InvoiceDate": "2017-1-1",
+    "VendorId": "VENDOR2",
+    "GrossAmount": 9.99
   },{
-    "invoiceId": "5",
-    "state": "1",
-    "userId": "4",
-    "invoiceDate": "1/1/2017",
-    "vendorId": "VENDOR1",
-    "amount": "200"
+    "InvoiceId": "5",
+    "Status": "1",
+    "UserId": "4",
+    "InvoiceDate": "2017-1-1",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 200
   },{
-    "invoiceId": "6",
-    "state": "1",
-    "userId": "3",
-    "invoiceDate": "1/3/2017",
-    "vendorId": "VENDOR2",
-    "amount": "304.56"
+    "InvoiceId": "6",
+    "Status": "1",
+    "UserId": "3",
+    "InvoiceDate": "2017-3-1",
+    "VendorId": "VENDOR2",
+    "GrossAmount": 304.56
   },{
-    "invoiceId": "7",
-    "state": "2",
-    "userId": "3",
-    "invoiceDate": "2/2/2017",
-    "vendorId": "VENDOR1",
-    "amount": "5000.02"
+    "InvoiceId": "7",
+    "Status": "2",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 5000.02
   }
 ]

@@ -9,10 +9,8 @@ import MenuButton from './MenuButton';
 const Menu = React.createClass({
   propTypes: {
     flags: React.PropTypes.arrayOf(React.PropTypes.string),
-    tabs: React.PropTypes.arrayOf(React.PropTypes.shape({
-      title: React.PropTypes.string.isRequired,
-      sections: React.PropTypes.array.isRequired
-    })).isRequired,
+    tabNames: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    buildTab: React.PropTypes.func.isRequired,
     newItem: React.PropTypes.shape({
       text: React.PropTypes.string.isRequired,
       callback: React.PropTypes.func.isRequired
@@ -22,16 +20,19 @@ const Menu = React.createClass({
     return <div className="menu">
         <MenuFlags flags={this.props.flags} />
         <MenuButton newItem={this.props.newItem} />
-        {this.props.tabs.map(tab =>
-          <MenuTab key={tab.title} title={tab.title} sections={tab.sections} select={this.props.selectTab}
-          isSelected={tab.title === (this.props.selectedTab || (this.props.tabs.length>0?this.props.tabs[0].title:''))} />
+        {this.props.tabNames.map(tabName =>
+          <MenuTab key={tabName} title={tabName} sections={this.props.buildTab(tabName, this.props.items)} select={this.props.selectTab}
+          isSelected={tabName === (this.props.selectedTab || (this.props.tabNames.length>0?this.props.tabNames[0]:''))} />
         )}
       </ div>
   }
 });
 
 function mapStateToProps(state) {
-  return {selectedTab: state.menu.selectedTab};
+  return {
+    items: state.menu.items,
+    selectedTab: state.menu.selectedTab
+  };
 }
 
 function mapDispatchToProps(dispatch) {

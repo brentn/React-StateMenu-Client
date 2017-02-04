@@ -1,10 +1,13 @@
 import {Map, List} from 'immutable';
 import {combineReducers} from 'redux';
-import {SELECT_TAB, TOGGLE_TREE, SELECT_ITEM, FETCH_DATA} from './actions';
+import {SET_ITEMS, SELECT_TAB, TOGGLE_TREE, SELECT_ITEM, FETCH_DATA} from './actions';
 
-// function setState(state, newState) {
-//   return state.merge(newState);
-// }
+function setItems(state, items) {
+  return Object.assign({}, state, {
+    //items: items.data
+    //items: items.reduce((a, b) => a[b.id] = b )
+  });
+}
 
 function selectTab(state, name) {
   return Object.assign({}, state, {
@@ -46,6 +49,7 @@ function fetchData(state, action) {
 
 function menu(state = Map(), action) {
   switch (action.type) {
+    case SET_ITEMS: return setItems(state, action.items);
     case SELECT_TAB: return selectTab(state, action.name);
     case SELECT_ITEM: return selectItem(state, action.itemId);
     case FETCH_DATA: return fetchData(state, action);

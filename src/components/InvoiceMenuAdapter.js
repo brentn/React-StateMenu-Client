@@ -1,17 +1,9 @@
-//import $ from '../../lib/jquery-3.1.0.min';
+// - read invoices, convert them to items, and store them in fakeState
 
-const state = {
+const fakeState = {
   userId:1,
   isFinance:true,
   accounts:[],//['110100', '110140'],
-  selectedId:null,
-  invoices:[
-    {id:1, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:204.22, costCenter: '123000', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')},
-    {id:2, status:0, userId:1, apprUserId:2, vendorId:'VENDOR', grossAmount:39.31, costCenter: '110100', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')},
-    {id:3, status:4, userId:2, apprUserId:1, vendorId:'VENDOR', grossAmount:90, costCenter: '123000', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21'), privateComments:'a'},
-    {id:5, status:4, userId:2, apprUserId:1, vendorId:'BIGBOY', grossAmount:903.12, costCenter: '110140', company:'PTC', paymentMethod:'eft', invoiceDate:new Date('2016/12/21'), moreInfo:true},
-    {id:4, status:10, userId:1, apprUserId:2, vendorId:'GRATOY', grossAmount:84.23, costCenter:'110100', company:'GAiN', paymentMethod:'eft', invoiceDate:new Date('2016/12/21')}
-  ]
 }
 const Submitted = "Submitted";
 const Approved = "Approved";
@@ -25,37 +17,35 @@ const tabStatusList = {
   Deleted: [6]
 }
 
-function showAllItems(tabName) {
-  let validTabs = [Submitted, Approved, "Paying", "Paid"];
-  return (state.isFinance && (validTabs.indexOf(tabName) >= 0));
-}
-
-function showAccountsTree(tabName) {
-  let validTabs = [Submitted, Approved, "Paying", "Paid"];
-  return (state.accounts && state.accounts.length>0 && (validTabs.indexOf(tabName) >= 0));
-}
-
-function tabInvoices(tabName) {
-  let validStatuses = tabStatusList[tabName];
-  return state.invoices.filter(invoice => {
-    return validStatuses.indexOf(invoice.status) >= 0;
-  });
+function tabItemList(tabName, stateItems) {
+  if (tabName && (tabNames.indexOf(tabName)>-1) && stateItems && Object.keys(stateItems).length) {
+    let validStatuses = tabStatusList[tabName];
+    return Object.keys(stateItems)
+      .filter(id => validStatuses.indexOf(stateItems[id].status)>=0)
+      .map(id => stateItems[id])
+  }
+  return [];
 }
 
 function getMenuTitle(invoice) {
-  return (invoice.vendorId || 'NO VENDOR');
-}
-
-function getMenuTreeTitle(invoice) {
-  let date = invoice.invoiceDate.getMonth() + "/" + invoice.invoiceDate.getDate();
-  let account = "(" + (invoice.costCenter || "xxxxxx") + ")";
-  let vendor = (invoice.vendorId || "unknown");
-  let amount = "$" + invoice.grossAmount;
-  return date + " " + account + " " + vendor + " " + amount;
+  return invoice.VendorId || 'NO VENDOR';
 }
 
 function getMenuSubtitle(invoice) {
-  return invoice.grossAmount.toFixed(2);
+  try {
+    return invoice.GrossAmount.toFixed(2);
+  } catch(ex) {
+    return '';
+  }
+}
+
+function getMenuTreeTitle(invoice) {
+  let invoiceDate = (new Date(invoice.InvoiceDate || 'x'))
+  let date = (!isNaN(invoiceDate))?invoiceDate.getMonth() + "/" + invoiceDate.getDate():'??/??';
+  let account = "(" + (invoice.CostCenter || "xxxxxx") + ")";
+  let vendor = (invoice.VendorId || "unknown");
+  let amount = "$" + (invoice.GrossAmount || '??');
+  return date + " " + account + " " + vendor + " " + amount;
 }
 
 function getImageUrl(userId) {
@@ -63,146 +53,154 @@ function getImageUrl(userId) {
 }
 
 function getTooltip(invoice) {
-  return "AP #" + ('00000' + invoice.id).slice(-4);
+  if (invoice && invoice.InvoiceId) {
+    if (invoice.InvoiceId.toString().length > 5) return "AP #" + invoice.InvoiceId;
+    return "AP #" + ('00000' + invoice.InvoiceId).slice(-5);
+  };
+  return "";
+}
+
+function hasPrivateComments(invoice) {
+  if (fakeState.isFinance && invoice.PrivComments && (invoice.PrivComments.length>0)) {
+    return true;
+  }
+  return false;
+}
+
+function itemFrom(invoice) {
+  if (!invoice || isNaN(invoice.InvoiceId)) throw new Error("You must provide an object with an InvoiceId");
+  return {
+    id: Number(invoice.InvoiceId),
+    status: Number(invoice.Status),
+    user: invoice.UserId,
+    vendor: invoice.VendorId,
+    account: invoice.CostCenter,
+    approver: Number(invoice.ApprUserId),
+    imageUrl: getImageUrl(invoice.UserId),
+    title: getMenuTitle(invoice),
+    subtitle: getMenuSubtitle(invoice),
+    treeTitle: getMenuTreeTitle(invoice),
+    tooltip: getTooltip(invoice),
+    total: Number(invoice.GrossAmount),
+    flags: {
+      private: (fakeState.isFinance && hasPrivateComments(invoice)),
+      info: (fakeState.isFinance && invoice.MoreInfo)
+    }
+  }
 }
 
 function newItemCallback() {
   console.log('New Item')
 }
 
-function itemFrom(invoice) {
+function showAllItems(tabName) {
+  let validTabs = [Submitted, Approved, "Paying", "Paid"];
+  return (fakeState.isFinance && (validTabs.indexOf(tabName) >= 0));
+}
+
+function showAccountsTree(tabName) {
+  let validTabs = [Submitted, Approved, "Paying", "Paid"];
+  return (fakeState.accounts && (fakeState.accounts.length>0) && (tabName.length>0) && (validTabs.indexOf(tabName) >= 0));
+}
+
+function buildVendorTree(title, itemList) {
+  let items = itemList || [];
   return {
-    id: invoice.id,
-    imageUrl: getImageUrl(invoice.userId),
-    title: getMenuTitle(invoice),
-    subtitle: getMenuSubtitle(invoice),
-    tooltip: getTooltip(invoice),
-    total: invoice.grossAmount,
-  }
-}
-
-function hasPrivateComments(invoice) {
-  return invoice.privateComments && invoice.privateComments.length>0;
-}
-
-function treeItemFrom(invoice) {
-  let priv = (state.isFinance && hasPrivateComments(invoice));
-  let info = (state.isFinance && invoice.moreInfo);
-  return {
-    id: invoice.id,
-    title: getMenuTreeTitle(invoice),
-    tooltip: getTooltip(invoice),
-    flags: {
-      private: priv,
-      info: info
-    }
-  }
-}
-
-function itemsFrom(invoices) {
-  return invoices.map(invoice =>
-    itemFrom(invoice)
-  );
-}
-
-function buildVendorTree(title, invoices) {
-  return {
-    title: title + " ("+invoices.length+")",
+    title: title + " ("+items.length+")",
     items: {
-      treeItems: invoices.map(invoice => {
-        let vendor = invoice.vendorId || 'NO_VENDOR';
-        let letter = invoice.vendorId?vendor.substr(0,1).toUpperCase():'?';
-        return {parents: [vendor, letter], item:treeItemFrom(invoice)};
+      treeItems: items.map(item => {
+        let vendor = item.vendor || 'NO_VENDOR';
+        let letter = item.vendor?vendor.substr(0,1).toUpperCase():'?';
+        return {parents: [vendor, letter], item: item};
       })
     }
   };
 }
 
-function buildFinanceTree(title, invoices) {
+function buildFinanceTree(title, items) {
   return{
-    title: title + " ("+invoices.length+")",
+    title: title + " ("+items.length+")",
     items: {
-      treeItems: invoices.map(invoice => {
-        if (invoice.status === 4) {
-          let company = invoice.company || "PTC";
-          let method = invoice.paymentMethod || "eft";
-          let count = invoices.filter(i => i.status===4 && (i.company || "PTC") === company && (i.paymentMethod || "eft" === method)).length;
+      treeItems: items.map(item => {
+        if (item.status === 4) {
+          let company = item.company || "PTC";
+          let method = item.paymentMethod || "eft";
+          let count = items.filter(i => i.status===4 && (i.company || "PTC") === company && (i.paymentMethod || "eft" === method)).length;
           let branch = company + " (" + (method) + ") (" + count + ")";
-          return {parents: [branch], item: treeItemFrom(invoice)};
+          return {parents: [branch], item: item};
         } else {
-          let count = invoices.filter(i => i.status !== 4).length;
+          let count = items.filter(i => i.status !== 4).length;
           let branch = "Pending Import (" + count + ")";
-          return {parents: [branch], item: treeItemFrom(invoice)};
+          return {parents: [branch], item: item};
         }
       })
     }
   }
 }
 
-function buildAccountTree(title, invoices) {
+function buildAccountTree(title, itemList) {
+  let items = itemList || [];
   return {
-    title: title + " ("+invoices.length+")",
+    title: title + " ("+items.length+")",
     items: {
-      treeItems: invoices.map(invoice => {
-        return {parents: [invoice.costCenter || '??????'], item:treeItemFrom(invoice)};
+      treeItems: items.map(item => {
+        return {parents: [item.account || '??????'], item: item};
       })
     }
   };
 }
 
-function buildTabSections(tabName) {
+function buildTabSections(tabName, stateItems = {}) {
   const MY_TITLE = "My Items";
+  if (tabNames.indexOf(tabName)===-1) throw new Error("please provide a tabName from the list provided by getTabNames()");
   let sections = [];
   let myTitle = '';
   if (showAllItems(tabName)) {
-    let allInvoices = tabInvoices(tabName, state.invoices);
-    if (allInvoices.length > 0) {
-      let allItems = (tabName === Approved?
-        buildFinanceTree("Finance", allInvoices):
-        buildVendorTree("All Items", allInvoices)
+    let itemsInTab = tabItemList(tabName, stateItems);
+    if (itemsInTab.length > 0) {
+      let tree = (tabName === Approved?
+        buildFinanceTree("Finance", itemsInTab):
+        buildVendorTree("All Items", itemsInTab)
       );
-      sections.push(allItems);
+      sections.push(tree);
       myTitle = MY_TITLE;
     }
   }
   if (showAccountsTree(tabName)) {
-    let accountInvoices = tabInvoices(tabName, state.invoices).filter(invoice => {
-      return state.accounts.indexOf(invoice.costCenter) >= 0;
+    let accountItems = tabItemList(tabName, stateItems).filter(item => {
+      return fakeState.accounts.indexOf(item.account) >= 0;
     });
-    if (accountInvoices.length>0) {
-      let accountItems = buildAccountTree("My Accounts", accountInvoices)
-      sections.push(accountItems);
+    if (accountItems.length>0) {
+      let tree = buildAccountTree("My Accounts", accountItems)
+      sections.push(tree);
       myTitle = MY_TITLE;
     }
   }
   if (tabName === Submitted) {
-    let approvableInvoices = tabInvoices(Submitted, state.invoices).filter(invoice  => {
-      return invoice.apprUserId === state.userId;
+    let approvableItems = tabItemList(Submitted, stateItems).filter(item  => {
+      // eslint-disable-next-line
+      return item.approver == fakeState.userId;
     });
-    if (approvableInvoices.length > 0) {
-      sections.push({title: "Awaiting My Approval", items: {listItems: itemsFrom(approvableInvoices)}});
+    if (approvableItems.length > 0) {
+      sections.push({title: "Awaiting My Approval", items: {listItems: approvableItems}});
       myTitle = MY_TITLE;
     }
   }
-  let myInvoices = tabInvoices(tabName, state.invoices);
-  sections.push({title: myTitle, items: {listItems: itemsFrom(myInvoices)}});
+  let myItems = tabItemList(tabName, stateItems);
+  sections.push({title: myTitle, items: {listItems: myItems}});
   return sections;
 }
 
 export default class InvoiceMenuAdapter {
-  getTabs() {
-    return tabNames.map(tab => {
-      return {
-        title: tab,
-        sections: buildTabSections(tab)
-      }
-    });
-  }
+
+  makeItem = itemFrom;
+
+  getTabNames() {return tabNames;}
 
   getFlags() {
     let flags = [];
-    if (state.isFinance) flags.push('finance');
-    if (state.accounts.length>0) flags.push ('signing-authority');
+    if (fakeState.isFinance) flags.push('finance');
+    if (fakeState.accounts.length>0) flags.push ('signing-authority');
     return flags;
   }
 
@@ -213,7 +211,11 @@ export default class InvoiceMenuAdapter {
     }
   }
 
-  TEST(name) {
+  buildTab(tabName, stateItems) {
+    return buildTabSections(tabName, stateItems);
+  }
+
+  TEST(name, a, b) {
     function item() {
       let id = Math.floor((Math.random() * 100) + 1);
       return {id:id, title:'item '+id, subtitle:'subtitle', imageUrl:'', tooltip:'tooltip'};
@@ -222,9 +224,21 @@ export default class InvoiceMenuAdapter {
       return {parents:['root'], item:item()};
     }
     switch (name) {
+      case 'getMenuTitle': return getMenuTitle(a);
+      case 'getMenuSubtitle': return getMenuSubtitle(a);
+      case 'getMenuTreeTitle': return getMenuTreeTitle(a);
+      case 'getImageUrl':  return getImageUrl(a);
+      case 'getTooltip': return getTooltip(a);
+      case 'hasPrivateComments': return hasPrivateComments(a);
+      case 'tabItemList': return tabItemList(a, b);
+      case 'showAllItems': return showAllItems(a);
+      case 'showAccountsTree': return showAccountsTree(a);
+      case 'buildVendorTree': return buildVendorTree(a, b);
+      case 'buildAccountTree': return buildAccountTree(a, b);
       case 'getItem' : return item();
       case 'getListItems' : return [item(), item(), item(), item()];
       case 'getTreeItems' : return [treeItem(), treeItem(), treeItem(), treeItem()];
+      case 'setState' : fakeState[a] = b; break;
       default: return;
     }
   }
