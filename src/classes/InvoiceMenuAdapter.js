@@ -1,7 +1,7 @@
-// - read invoices, convert them to items, and store them in fakeState
+
 
 const fakeState = {
-  userId:1,
+  userId:3,
   isFinance:true,
   accounts:[],//['110100', '110140'],
 }
@@ -27,67 +27,6 @@ function tabItemList(tabName, stateItems) {
   return [];
 }
 
-function getMenuTitle(invoice) {
-  return invoice.VendorId || 'NO VENDOR';
-}
-
-function getMenuSubtitle(invoice) {
-  try {
-    return invoice.GrossAmount.toFixed(2);
-  } catch(ex) {
-    return '';
-  }
-}
-
-function getMenuTreeTitle(invoice) {
-  let invoiceDate = (new Date(invoice.InvoiceDate || 'x'))
-  let date = (!isNaN(invoiceDate))?invoiceDate.getMonth() + "/" + invoiceDate.getDate():'??/??';
-  let account = "(" + (invoice.CostCenter || "xxxxxx") + ")";
-  let vendor = (invoice.VendorId || "unknown");
-  let amount = "$" + (invoice.GrossAmount || '??');
-  return date + " " + account + " " + vendor + " " + amount;
-}
-
-function getImageUrl(userId) {
-  return 'https://staff.powertochange.org/custom-pages/webService.php?type=staff_photo&api_token=V7qVU7n59743KNVgPdDMr3T8&staff_username=brentn';
-}
-
-function getTooltip(invoice) {
-  if (invoice && invoice.InvoiceId) {
-    if (invoice.InvoiceId.toString().length > 5) return "AP #" + invoice.InvoiceId;
-    return "AP #" + ('00000' + invoice.InvoiceId).slice(-5);
-  };
-  return "";
-}
-
-function hasPrivateComments(invoice) {
-  if (fakeState.isFinance && invoice.PrivComments && (invoice.PrivComments.length>0)) {
-    return true;
-  }
-  return false;
-}
-
-function itemFrom(invoice) {
-  if (!invoice || isNaN(invoice.InvoiceId)) throw new Error("You must provide an object with an InvoiceId");
-  return {
-    id: Number(invoice.InvoiceId),
-    status: Number(invoice.Status),
-    user: invoice.UserId,
-    vendor: invoice.VendorId,
-    account: invoice.CostCenter,
-    approver: Number(invoice.ApprUserId),
-    imageUrl: getImageUrl(invoice.UserId),
-    title: getMenuTitle(invoice),
-    subtitle: getMenuSubtitle(invoice),
-    treeTitle: getMenuTreeTitle(invoice),
-    tooltip: getTooltip(invoice),
-    total: Number(invoice.GrossAmount),
-    flags: {
-      private: (fakeState.isFinance && hasPrivateComments(invoice)),
-      info: (fakeState.isFinance && invoice.MoreInfo)
-    }
-  }
-}
 
 function newItemCallback() {
   console.log('New Item')
@@ -193,11 +132,9 @@ function buildTabSections(tabName, stateItems = {}) {
 
 export default class InvoiceMenuAdapter {
 
-  makeItem = itemFrom;
-
   getTabNames() {return tabNames;}
 
-  getFlags() {
+  getMenuFlags() {
     let flags = [];
     if (fakeState.isFinance) flags.push('finance');
     if (fakeState.accounts.length>0) flags.push ('signing-authority');
@@ -224,12 +161,6 @@ export default class InvoiceMenuAdapter {
       return {parents:['root'], item:item()};
     }
     switch (name) {
-      case 'getMenuTitle': return getMenuTitle(a);
-      case 'getMenuSubtitle': return getMenuSubtitle(a);
-      case 'getMenuTreeTitle': return getMenuTreeTitle(a);
-      case 'getImageUrl':  return getImageUrl(a);
-      case 'getTooltip': return getTooltip(a);
-      case 'hasPrivateComments': return hasPrivateComments(a);
       case 'tabItemList': return tabItemList(a, b);
       case 'showAllItems': return showAllItems(a);
       case 'showAccountsTree': return showAccountsTree(a);

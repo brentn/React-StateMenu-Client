@@ -1,17 +1,11 @@
 import fetch from 'isomorphic-fetch';
 
-export const SET_STATE = 'SET_STATE';
-export const SET_ITEMS = 'SET_ITEMS';
 export const SELECT_TAB = 'SELECT_TAB';
 export const TOGGLE_TREE = 'TOGGLE_TREE';
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const FETCH_DATA = 'FETCH_DATA';
 
 var data = require('../data/invoices.json');
-
-export function setItems(items) {
-  return {type: SET_ITEMS, items: items};
-}
 
 export function selectTab(tabName) {
   return {type: SELECT_TAB, name: tabName};
@@ -53,7 +47,6 @@ export function fetchData(url, makeItem) {
       .then(response => {
         try {
           if (response.status===200) {
-//            return dispatch(receiveData(response.json(), makeItem));
             return dispatch(receiveData({data:data}, makeItem))
           } else {
             dispatch(dataError());
@@ -62,6 +55,5 @@ export function fetchData(url, makeItem) {
           dispatch(dataError(ex));
         }
       })
-      .then(items => dispatch(setItems(items.data)));
   }
 }

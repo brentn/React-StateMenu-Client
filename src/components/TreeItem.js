@@ -23,7 +23,7 @@ export default React.createClass({
   },
   render: function() {
     return <span className={"tree-item menu-item" + (this.props.isSelected?" selected":"")} title={this.props.item.tooltip}>
-      {this.props.item.title}
+      {this.props.item.treeTitle}
       {(this.props.item.flags && this.props.item.flags.info?<span className='flag info' />:"")}
       {(this.props.item.flags && this.props.item.flags.private?<span className='flag private' />:"")}
     </span>

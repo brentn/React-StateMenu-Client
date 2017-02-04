@@ -4,6 +4,7 @@
     "Status": "0",
     "UserId": "3",
     "InvoiceDate": "2017-1-1",
+    "CostCenter": "110100",
     "VendorId": "VENDOR1",
     "GrossAmount": 10
   },{
@@ -11,6 +12,7 @@
     "Status": "0",
     "UserId": "3",
     "InvoiceDate": "2017-2-1",
+    "CostCenter": "110100",
     "VendorId": "VENDOR2",
     "GrossAmount": 10.01
   },{
@@ -18,13 +20,16 @@
     "Status": "1",
     "UserId": "3",
     "InvoiceDate": "2017-3-1",
+    "CostCenter": "110100",
     "VendorId": "VENDOR1",
-    "GrossAmount": 19.95
+    "GrossAmount": 19.95,
+    "PrivComments": "Shhh..."
   },{
     "InvoiceId": "4",
     "Status": "0",
     "UserId": "3",
     "InvoiceDate": "2017-1-1",
+    "CostCenter": "110100",
     "VendorId": "VENDOR2",
     "GrossAmount": 9.99
   },{
@@ -32,6 +37,8 @@
     "Status": "1",
     "UserId": "4",
     "InvoiceDate": "2017-1-1",
+    "CostCenter": "110100",
+    "MoreInfo": true,
     "VendorId": "VENDOR1",
     "GrossAmount": 200
   },{
@@ -39,6 +46,7 @@
     "Status": "1",
     "UserId": "3",
     "InvoiceDate": "2017-3-1",
+    "CostCenter": "110100",
     "VendorId": "VENDOR2",
     "GrossAmount": 304.56
   },{
@@ -46,7 +54,82 @@
     "Status": "2",
     "UserId": "3",
     "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
     "VendorId": "VENDOR1",
     "GrossAmount": 5000.02
+  },{
+    "InvoiceId": "8",
+    "Status": "3",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-6",
+    "CostCenter": "110100",
+    "VendorId": "Swarez",
+    "GrossAmount": 50.32
+  },{
+    "InvoiceId": "9",
+    "Status": "5",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
+    "VendorId": "INDIGO",
+    "GrossAmount": 208
+  },{
+    "InvoiceId": "10",
+    "Status": "6",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
+    "VendorId": "VENTOR1",
+    "GrossAmount": 1.02
+  },{
+    "InvoiceId": "11",
+    "Status": "8",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 25000.02
+  },{
+    "InvoiceId": "12",
+    "Status": "5",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
+    "MoreInfo": true,
+    "VendorId": "VENDOR1",
+    "GrossAmount": 5780.02
+  },{
+    "InvoiceId": "13",
+    "Status": "5",
+    "UserId": "3",
+    "InvoiceDate": "2017-7-2",
+    "CostCenter": "110110",
+    "VendorId": "VENUS",
+    "GrossAmount": 1000.02
+  },{
+    "InvoiceId": "14",
+    "Status": "4",
+    "UserId": "3",
+    "InvoiceDate": "2016-12-2",
+    "CostCenter": "110100",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 5000
+  },{
+    "InvoiceId": "15",
+    "Status": "0",
+    "UserId": "3",
+    "InvoiceDate": "2017-2-12",
+    "CostCenter": "110100",
+    "VendorId": "VENDOR3",
+    "GrossAmount": 19.62
+  },{
+    "InvoiceId": "16",
+    "Status": "2",
+    "UserId": "5",
+    "ApprUserId": "3",
+    "InvoiceDate": "2017-2-2",
+    "CostCenter": "110100",
+    "VendorId": "VENDOR1",
+    "GrossAmount": 103.06
   }
 ]

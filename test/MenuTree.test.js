@@ -40,7 +40,7 @@ describe('MenuTree', () => {
     var ids = [];
     const clickHandler = function(id) {expect(ids.indexOf(id)).toBe(-1); ids.push(id);};
     const wrapper = mount(<MenuTree title='' items={ITEMS} nodeCallback={clickHandler} itemCallback={CALLBACK} expandedTrees={EX_TREE} />);
-    wrapper.find('.menu-tree').forEach(node => {
+    wrapper.find('.title').forEach(node => {
       node.simulate('click');
     })
     expect(ids.length).toBe(5);
@@ -84,7 +84,7 @@ describe('MenuTree', () => {
     expect(wrapper.find('.title.expanded').length).toBe(1);
   });
   it('sorts leaves by id', () => {
-    const ITEMS = [{parents:[], item:{id:2, title:"2"}},{parents:[], item:{id:5, title:"5"}},{parents:[], item:{id:12, title:"12"}},{parents:[], item:{id:6, title:"6"}}];
+    const ITEMS = [{parents:[], item:{id:2, treeTitle:"2"}},{parents:[], item:{id:5, treeTitle:"5"}},{parents:[], item:{id:12, treeTitle:"12"}},{parents:[], item:{id:6, treeTitle:"6"}}];
     const wrapper = mount(<MenuTree title='root' items={ITEMS} nodeCallback={CALLBACK} itemCallback={CALLBACK} expandedTrees={EX_TREE} />);
     expect(wrapper.find('.tree-item').at(0).text()).toBe('2');
     expect(wrapper.find('.tree-item').at(1).text()).toBe('5');

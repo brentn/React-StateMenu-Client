@@ -19,7 +19,7 @@ describe('TreeItem', () => {
   });
   it('renders the provided item.title', () => {
     const title = "Jacob";
-    item.title = title;
+    item.treeTitle = title;
     const wrapper = shallow(<TreeItem item={item} />);
     expect(wrapper.find('span').text()).toBe(title);
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import InvoiceMenuAdapter from '../src/components/InvoiceMenuAdapter';
+import InvoiceMenuAdapter from '../src/classes/InvoiceMenuAdapter';
 
 describe('InvoiceMenuAdapter', () => {
   const adapter = new InvoiceMenuAdapter();
@@ -8,6 +8,38 @@ describe('InvoiceMenuAdapter', () => {
   describe('private', () => {
     beforeEach(() => {
       adapter.TEST('setState', 'isFinance', false);
+    })
+    describe('getTabNames()', () => {
+      it('returns a list of strings', () => {
+        var tabNames = adapter.getTabNames();
+        expect(Array.isArray(tabNames)).toBe(true);
+        expect(tabNames.length).toBeGreaterThan(0);
+        expect(typeof(tabNames[0])).toBe('string');
+      })
+    })
+    describe('getMenuFlags', () => {
+      it('returns a list', () => {
+        expect(Array.isArray(adapter.getMenuFlags())).toBe(true);
+      });
+      it('returns an empty list if not finance and no accounts', () => {
+        adapter.TEST('setState', 'isFinance', false);
+        adapter.TEST('setState', 'accounts', []);
+        expect(adapter.getMenuFlags().length).toBe(0);
+      })
+      it('returns finance for a finance user', () => {
+        adapter.TEST('setState', 'isFinance', true);
+        expect(adapter.getMenuFlags().indexOf('finance')>-1).toBe(true);
+      })
+      it('returns signing-authority for a finance user', () => {
+        adapter.TEST('setState', 'accounts', ['101010']);
+        expect(adapter.getMenuFlags().indexOf('signing-authority')>-1).toBe(true);
+      })
+      it('returns both flags for a user with both properties', () => {
+        adapter.TEST('setState', 'isFinance', true);
+        adapter.TEST('setState', 'accounts', ['101010']);
+        expect(adapter.getMenuFlags().indexOf('finance')>-1).toBe(true);
+        expect(adapter.getMenuFlags().indexOf('signing-authority')>-1).toBe(true);
+      })
     })
     describe('showAllItems()',() => {
       it('returns false by default', () => {
@@ -103,177 +135,6 @@ describe('InvoiceMenuAdapter', () => {
         expect(result.length).toBe(2);
         expect(result[0]).toBe(item1);
         expect(result[1]).toBe(item2);
-      })
-    })
-    describe('Invoice functions', () => {
-      describe('getMenuTitle()', () => {
-        it('returns NO VENDOR if no vendor supplied', () => {
-          expect(adapter.TEST('getMenuTitle', {})).toBe('NO VENDOR');
-        })
-        it('returns VendorId if supplied', () => {
-          var vendor = 'SLNNNEEO';
-          var invoice = {VendorId:vendor};
-          expect(adapter.TEST('getMenuTitle', invoice)).toBe(vendor);
-        })
-      })
-      describe('getMenuSubtitle()', () => {
-        it('returns empty string by default', () => {
-          expect(typeof(adapter.TEST('getMenuSubtitle', {}))).toBe('string');
-          expect(adapter.TEST('getMenuSubtitle', {}).length).toBe(0);
-        })
-        it('returns amount', () => {
-          var amount = 35.51;
-          expect(adapter.TEST('getMenuSubtitle', {GrossAmount:amount})).toEqual(amount.toString());
-        })
-        it('rounds amount to 2 decimals', () => {
-          expect(adapter.TEST('getMenuSubtitle', {GrossAmount:78.3345})).toEqual("78.33");
-          expect(adapter.TEST('getMenuSubtitle', {GrossAmount:209.4152})).toEqual("209.42");
-        })
-      })
-      describe('getMenuTreeTitle()', () => {
-        it('returns default values by default', () => {
-          expect(adapter.TEST('getMenuTreeTitle', {})).toBe('??/?? (xxxxxx) unknown $??')
-        })
-        it('replaces invalid dates with ??/??', () => {
-          expect(adapter.TEST('getMenuTreeTitle', {InvoiceDate:null}).substr(0,5)).toBe('??/??');
-          expect(adapter.TEST('getMenuTreeTitle', {InvoiceDate:'abc'}).substr(0,5)).toBe('??/??');
-          expect(adapter.TEST('getMenuTreeTitle', {InvoiceDate:{}}).substr(0,5)).toBe('??/??');
-          expect(adapter.TEST('getMenuTreeTitle', {InvoiceDate:[]}).substr(0,5)).toBe('??/??');
-        })
-        it('replaces missing costcenter with xxxxxx',() => {
-          expect(adapter.TEST('getMenuTreeTitle', {}).substr(6,8)).toBe('(xxxxxx)');
-          expect(adapter.TEST('getMenuTreeTitle', {CostCenter:null}).substr(6,8)).toBe('(xxxxxx)');
-          expect(adapter.TEST('getMenuTreeTitle', {CostCenter:undefined}).substr(6,8)).toBe('(xxxxxx)');
-        })
-        it('replaces missing vendor with unknown',() => {
-          expect(adapter.TEST('getMenuTreeTitle', {}).substr(15,7)).toBe('unknown');
-          expect(adapter.TEST('getMenuTreeTitle', {VendorId:null}).substr(15,7)).toBe('unknown');
-          expect(adapter.TEST('getMenuTreeTitle', {VendorId:undefined}).substr(15,7)).toBe('unknown');
-        })
-        it('replaces missing amount with $??',() => {
-          expect(adapter.TEST('getMenuTreeTitle', {}).substr(23,3)).toBe('$??');
-          expect(adapter.TEST('getMenuTreeTitle', {GrossAmount:null}).substr(23,3)).toBe('$??');
-          expect(adapter.TEST('getMenuTreeTitle', {GrossAmount:undefined}).substr(23,3)).toBe('$??');
-        })
-      })
-      describe('getImageUrl(userId)', () => {
-        it('returns a url from theLoop', () => {
-          expect(adapter.TEST('getImageUrl', {}).indexOf('https://staff.powertochange.org')).toBeGreaterThan(-1);
-        })
-        xit('returns a different url for each user',() => {
-          let firstUrl = adapter.TEST('getImageUrl', {UserId:1});
-          let secondUrl = adapter.TEST('getImageUrl', {UserId:2});
-          expect(firstUrl).not.toEqual(secondUrl);
-        })
-      })
-      describe('getTooltip()', () => {
-        it('returns an empty string by default', () => {
-          expect(typeof(adapter.TEST('getTooltip', {}))).toBe('string');
-          expect(adapter.TEST('getTooltip', {}).length).toBe(0);
-        })
-        it('prefixes the invoiceId with AP #', () => {
-          expect(adapter.TEST('getTooltip', {InvoiceId:24}).split('0')[0]).toBe('AP #');
-        })
-        it('pads the invoiceId to 5 characters', () => {
-          expect(adapter.TEST('getTooltip', {InvoiceId:5}).split(' ')[1]).toBe('#00005');
-          expect(adapter.TEST('getTooltip', {InvoiceId:8932}).split(' ')[1]).toBe('#08932');
-          expect(adapter.TEST('getTooltip', {InvoiceId:404040}).split(' ')[1]).toBe('#404040');
-        })
-      })
-      describe('hasPrivateComments()', () => {
-        it('always returns false for non finance', () => {
-          adapter.TEST('setState', 'isFinance', false);
-          expect(adapter.TEST('hasPrivateComments', {})).toBe(false);
-          expect(adapter.TEST('hasPrivateComments', {PrivComments:'private'})).toBe(false);
-        })
-        it('returns false for missing or empty', () => {
-          adapter.TEST('setState', 'isFinance', true);
-          expect(adapter.TEST('hasPrivateComments', {})).toBe(false);
-          expect(adapter.TEST('hasPrivateComments', {PrivComments:''})).toBe(false);
-        })
-        it('returns true for finance with private comments', () => {
-          adapter.TEST('setState', 'isFinance', true);
-          expect(adapter.TEST('hasPrivateComments', {PrivComments:'private'})).toBe(true);
-        })
-      })
-    })
-    describe('makeItem', () => {
-      it('is a function', () => {
-        expect(typeof(adapter.makeItem)).toBe('function');
-      });
-      it('requires an object with InvoiceId property', () => {
-        try {
-          adapter.makeItem();
-          expect(true).toBe(false);
-        } catch(e) {}
-        try {
-          adapter.makeItem({});
-          expect(true).toBe(false);
-        } catch(e) {}
-        try {
-          adapter.makeItem({InvoiceId:'abc'});
-          expect(true).toBe(false);
-        } catch(e) {}
-      })
-      it('produces an object that uses InvoiceId as its id', () => {
-        expect(adapter.makeItem({InvoiceId:1}).id).toBe(1);
-      })
-      it('maps properties correctly', () => {
-        var id = 23;
-        var status = 3;
-        var vendor = 'VENDOR';
-        var date = new Date();
-        var account = '434334';
-        var amount = 24.13;
-        var invoice = {
-          InvoiceId:id,
-          Status:status,
-          VendorId:vendor,
-          InvoiceDate:date,
-          CostCenter:account,
-          GrossAmount:amount,
-        }
-        var result = adapter.makeItem(invoice);
-        expect(result.id).toBe(id);
-        expect(result.status).toBe(status);
-        expect(result.imageUrl.indexOf('powertochange')).toBeGreaterThan(-1);
-        expect(result.title).toBe(vendor);
-        expect(result.subtitle).toBe(amount.toFixed(2));
-        expect(typeof(result.treeTitle)).toBe('string');
-        expect(result.tooltip.length).toBe(9);
-        expect(result.total).toBe(amount);
-      })
-    })
-    describe('getTabNames()', () => {
-      it('returns a list of strings', () => {
-        var tabNames = adapter.getTabNames();
-        expect(Array.isArray(tabNames)).toBe(true);
-        expect(tabNames.length).toBeGreaterThan(0);
-        expect(typeof(tabNames[0])).toBe('string');
-      })
-    })
-    describe('getFlags', () => {
-      it('returns a list', () => {
-        expect(Array.isArray(adapter.getFlags())).toBe(true);
-      });
-      it('returns an empty list if not finance and no accounts', () => {
-        adapter.TEST('setState', 'isFinance', false);
-        adapter.TEST('setState', 'accounts', []);
-        expect(adapter.getFlags().length).toBe(0);
-      })
-      it('returns finance for a finance user', () => {
-        adapter.TEST('setState', 'isFinance', true);
-        expect(adapter.getFlags().indexOf('finance')>-1).toBe(true);
-      })
-      it('returns signing-authority for a finance user', () => {
-        adapter.TEST('setState', 'accounts', ['101010']);
-        expect(adapter.getFlags().indexOf('signing-authority')>-1).toBe(true);
-      })
-      it('returns both flags for a user with both properties', () => {
-        adapter.TEST('setState', 'isFinance', true);
-        adapter.TEST('setState', 'accounts', ['101010']);
-        expect(adapter.getFlags().indexOf('finance')>-1).toBe(true);
-        expect(adapter.getFlags().indexOf('signing-authority')>-1).toBe(true);
       })
     })
     describe('buildVendorTree', () => {
